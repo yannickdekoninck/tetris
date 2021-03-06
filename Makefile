@@ -17,7 +17,7 @@ $(BIN): $(OBJS)
 	$(CC) $(CFLAGS) $(OBJS) -o $(BIN)
 
 
-build/%.o: src/%.c
+build/%.o: src/code/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
