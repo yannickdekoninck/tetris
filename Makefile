@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -framework OpenGL
+CFLAGS= -F/Library/Frameworks -framework SDL2
 BUILD_DIR = build
 OBJS=$(BUILD_DIR)/tetris.o
 BIN=$(BUILD_DIR)/main
