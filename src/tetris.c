@@ -1,6 +1,6 @@
 #include <SDL.h>
 #include <stdio.h>
-
+#include <stdbool.h>
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
@@ -13,6 +13,10 @@ int main(int argc, char *argv[])
 
     //The surface contained by the window
     SDL_Surface *screenSurface = NULL;
+
+    bool quit = false;
+
+    SDL_Event e;
 
     //Initialize SDL
     if (SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -32,14 +36,21 @@ int main(int argc, char *argv[])
             //Get window surface
             screenSurface = SDL_GetWindowSurface(window);
 
-            //Fill the surface white
-            SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
+            while (!quit)
+            {
+                while (SDL_PollEvent(&e) != 0)
+                {
+                    if (e.type == SDL_QUIT)
+                    {
+                        quit = true;
+                    }
+                }
+                //Fill the surface white
+                SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
 
-            //Update the surface
-            SDL_UpdateWindowSurface(window);
-
-            //Wait two seconds
-            SDL_Delay(2000);
+                //Update the surface
+                SDL_UpdateWindowSurface(window);
+            }
         }
     }
     //Destroy window
