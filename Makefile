@@ -1,18 +1,24 @@
 CC=gcc
 CFLAGS= -framework OpenGL
-OBJS=tetris.o
-BIN=build/main
+BUILD_DIR = build
+OBJS=$(BUILD_DIR)/tetris.o
+BIN=$(BUILD_DIR)/main
 
 
 
-all:$(BIN)
+all: build_dir $(BIN)
 
-main: $(OBJS)
-	$(CC) $(CFLAGS) $(OBJS) -o main
+build_dir: $(BUILD_DIR)
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+$(BIN): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(BIN)
 
 
-%.o: %.c
+build/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	rm -r main *.o
+	rm -rf build
