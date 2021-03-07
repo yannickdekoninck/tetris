@@ -1,5 +1,4 @@
 #include "graphics.h"
-#include <SDL2/SDL.h>
 #include "stdio.h"
 
 SDL_Window *window = NULL;
@@ -28,6 +27,12 @@ int initialize_graphics(char *app_name, int screen_width, int screen_height)
         printf("Could not initialize renderer. SDL_Error: %s\n", SDL_GetError());
         return -3;
     }
+    int image_flags = IMG_INIT_PNG;
+    if (!(IMG_Init(image_flags) & image_flags))
+    {
+        printf("Could not initialize SDL2_image\n");
+        return -4;
+    }
 
     return 0;
 }
@@ -52,4 +57,17 @@ void shut_down_graphics()
 
     //Quit SDL subsystems
     SDL_Quit();
+}
+
+Sprite *create_sprite(char *path)
+{
+    Sprite *output_sprite = malloc(sizeof(Sprite));
+    output_sprite->sprite_surface = IMG_Load(path);
+    return output_sprite;
+}
+
+void destroy_sprite(Sprite *sprite)
+{
+    free(sprite);
+    return;
 }

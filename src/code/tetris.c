@@ -17,6 +17,7 @@ int main(int argc, char *argv[])
     }
 
     bool quit = false;
+    Sprite *test_sprite = create_sprite("assets/tile.png");
 
     SDL_Event e;
 
@@ -35,6 +36,7 @@ int main(int argc, char *argv[])
         //Update the surface
         update_screen();
     }
+    destroy_sprite(test_sprite);
     shut_down_graphics();
     return 0;
 }
