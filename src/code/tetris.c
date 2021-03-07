@@ -1,3 +1,4 @@
+#include "graphics.h"
 #include <SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -8,6 +9,7 @@ const int SCREEN_HEIGHT = 480;
 int main(int argc, char *argv[])
 {
 
+    initialize_graphics("SDL tutorial", SCREEN_WIDTH, SCREEN_HEIGHT);
     //The window we'll be rendering to
     SDL_Window *window = NULL;
 
