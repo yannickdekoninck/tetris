@@ -6,7 +6,7 @@
 
 typedef struct Sprites
 {
-    SDL_Surface *sprite_surface;
+    SDL_Texture *sprite_texture;
 
 } Sprite;
 

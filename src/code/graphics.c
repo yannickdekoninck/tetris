@@ -61,8 +61,22 @@ void shut_down_graphics()
 
 Sprite *create_sprite(char *path)
 {
+    SDL_Surface *loaded_surface = IMG_Load(path);
+
+    if (loaded_surface == NULL)
+    {
+        printf("Could not load texture in %s", path);
+        return NULL;
+    }
+    SDL_Texture *new_texture = SDL_CreateTextureFromSurface(renderer, loaded_surface);
+    if (new_texture == NULL)
+    {
+        printf("Could not create texture from surface");
+        return NULL;
+    }
     Sprite *output_sprite = malloc(sizeof(Sprite));
-    output_sprite->sprite_surface = IMG_Load(path);
+    output_sprite->sprite_texture = new_texture;
+
     return output_sprite;
 }
 
