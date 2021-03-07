@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
         clear_screen();
 
         //Update the surface
-        draw();
+        update_screen();
     }
     shut_down_graphics();
     return 0;

@@ -31,7 +31,7 @@ void clear_screen()
     SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
 }
 
-void draw()
+void update_screen()
 {
     SDL_UpdateWindowSurface(window);
 }
