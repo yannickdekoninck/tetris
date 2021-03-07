@@ -1,5 +1,6 @@
 #include "graphics.h"
 #include <SDL.h>
+#include "stdio.h"
 
 SDL_Window *window = NULL;
 SDL_Surface *screenSurface = NULL;
