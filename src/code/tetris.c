@@ -35,6 +35,6 @@ int main(int argc, char *argv[])
         //Update the surface
         draw();
     }
-
+    shut_down_graphics();
     return 0;
 }
