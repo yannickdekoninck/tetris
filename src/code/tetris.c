@@ -9,57 +9,32 @@ const int SCREEN_HEIGHT = 480;
 int main(int argc, char *argv[])
 {
 
-    initialize_graphics("SDL tutorial", SCREEN_WIDTH, SCREEN_HEIGHT);
-    //The window we'll be rendering to
-    SDL_Window *window = NULL;
-
-    //The surface contained by the window
-    SDL_Surface *screenSurface = NULL;
+    int gfx_init = initialize_graphics("SDL tutorial", SCREEN_WIDTH, SCREEN_HEIGHT);
+    if (gfx_init < 0)
+    {
+        printf("Something went wrong initializing the graphics system");
+        return -1;
+    }
 
     bool quit = false;
 
     SDL_Event e;
 
-    //Initialize SDL
-    if (SDL_Init(SDL_INIT_VIDEO) < 0)
+    while (!quit)
     {
-        printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
-    }
-    else
-    {
-        //Create window
-        window = SDL_CreateWindow("SDL Tutorial", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, SCREEN_WIDTH, SCREEN_HEIGHT, SDL_WINDOW_SHOWN);
-        if (window == NULL)
+        while (SDL_PollEvent(&e) != 0)
         {
-            printf("Window could not be created! SDL_Error: %s\n", SDL_GetError());
-        }
-        else
-        {
-            //Get window surface
-            screenSurface = SDL_GetWindowSurface(window);
-
-            while (!quit)
+            if (e.type == SDL_QUIT)
             {
-                while (SDL_PollEvent(&e) != 0)
-                {
-                    if (e.type == SDL_QUIT)
-                    {
-                        quit = true;
-                    }
-                }
-                //Fill the surface white
-                SDL_FillRect(screenSurface, NULL, SDL_MapRGB(screenSurface->format, 0xFF, 0xFF, 0xFF));
-
-                //Update the surface
-                SDL_UpdateWindowSurface(window);
+                quit = true;
             }
         }
-    }
-    //Destroy window
-    SDL_DestroyWindow(window);
+        //Fill the surface white
+        clear_screen();
 
-    //Quit SDL subsystems
-    SDL_Quit();
+        //Update the surface
+        draw();
+    }
 
     return 0;
 }
