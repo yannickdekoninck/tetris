@@ -1,5 +1,5 @@
 CC=gcc
-CFLAGS= -I/Library/Frameworks/SDL2.framework/Headers -F/Library/Frameworks -framework SDL2
+CFLAGS= -l SDL2 -l SDL2_image
 BUILD_DIR = build
 ASSET_DIR = $(BUILD_DIR)/assets
 OBJS=$(BUILD_DIR)/tetris.o $(BUILD_DIR)/graphics.o
