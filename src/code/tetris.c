@@ -18,7 +18,6 @@ int main(int argc, char *argv[])
 
     bool quit = false;
     Sprite *test_sprite = create_sprite("assets/tile.png");
-
     SDL_Event e;
 
     while (!quit)
@@ -32,6 +31,8 @@ int main(int argc, char *argv[])
         }
         //Fill the surface white
         clear_screen();
+
+        draw_sprite(test_sprite);
 
         //Update the surface
         update_screen();

@@ -80,6 +80,11 @@ Sprite *create_sprite(char *path)
     return output_sprite;
 }
 
+void draw_sprite(Sprite *sprite)
+{
+    SDL_RenderCopy(renderer, sprite->sprite_texture, NULL, NULL);
+}
+
 void destroy_sprite(Sprite *sprite)
 {
     free(sprite);
