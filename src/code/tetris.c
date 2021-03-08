@@ -1,4 +1,5 @@
 #include "graphics.h"
+#include "field.h"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -18,6 +19,14 @@ int main(int argc, char *argv[])
 
     bool quit = false;
     Sprite *test_sprite = create_sprite("assets/tile.png");
+    Field field;
+    initialize_field(&field, 22, 10);
+
+    FieldItem item0;
+    item0.field_sprite = test_sprite;
+    FieldItem lookup_table[1];
+    lookup_table[0] = item0;
+
     SDL_Event e;
 
     while (!quit)
@@ -31,6 +40,7 @@ int main(int argc, char *argv[])
         }
         //Fill the surface white
         clear_screen();
+        draw_field(&field, lookup_table, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
         int rows = 40;
         int columns = 10;
         int start_x = SCREEN_WIDTH / 2 - columns * test_sprite->width / 2;
