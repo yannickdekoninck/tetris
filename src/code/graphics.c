@@ -76,13 +76,20 @@ Sprite *create_sprite(char *path)
     }
     Sprite *output_sprite = malloc(sizeof(Sprite));
     output_sprite->sprite_texture = new_texture;
+    output_sprite->width = loaded_surface->w;
+    output_sprite->height = loaded_surface->h;
 
     return output_sprite;
 }
 
-void draw_sprite(Sprite *sprite)
+void draw_sprite(Sprite *sprite, int x, int y)
 {
-    SDL_RenderCopy(renderer, sprite->sprite_texture, NULL, NULL);
+    SDL_Rect target_rect;
+    target_rect.x = x;
+    target_rect.y = y;
+    target_rect.w = sprite->width;
+    target_rect.h = sprite->height;
+    SDL_RenderCopy(renderer, sprite->sprite_texture, NULL, &target_rect);
 }
 
 void destroy_sprite(Sprite *sprite)

@@ -32,7 +32,7 @@ int main(int argc, char *argv[])
         //Fill the surface white
         clear_screen();
 
-        draw_sprite(test_sprite);
+        draw_sprite(test_sprite, 1, 1);
 
         //Update the surface
         update_screen();
