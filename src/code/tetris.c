@@ -31,8 +31,23 @@ int main(int argc, char *argv[])
         }
         //Fill the surface white
         clear_screen();
-
-        draw_sprite(test_sprite, 1, 1);
+        int rows = 40;
+        int columns = 10;
+        int start_x = SCREEN_WIDTH / 2 - columns * test_sprite->width / 2;
+        int start_y = SCREEN_HEIGHT - test_sprite->height - 20;
+        int pitch_x = test_sprite->width + 1;
+        int pitch_y = test_sprite->height + 1;
+        int x = 0;
+        int y = 0;
+        for (int i = 0; i < 10; i++)
+        {
+            for (int j = 0; j < 22; j++)
+            {
+                x = start_x + i * pitch_x;
+                y = start_y - j * pitch_y;
+                draw_sprite(test_sprite, x, y);
+            }
+        }
 
         //Update the surface
         update_screen();
