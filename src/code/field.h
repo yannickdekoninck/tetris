@@ -9,7 +9,7 @@ typedef struct FieldItems
 
 typedef struct Fields
 {
-    short **field;
+    short *field;
     short rows;
     short columns;
 } Field;
