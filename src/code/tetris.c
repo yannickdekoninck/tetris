@@ -10,7 +10,7 @@ const int SCREEN_HEIGHT = 600;
 int main(int argc, char *argv[])
 {
 
-    int gfx_init = initialize_graphics("SDL tutorial", SCREEN_WIDTH, SCREEN_HEIGHT);
+    int gfx_init = initialize_graphics("Tetris", SCREEN_WIDTH, SCREEN_HEIGHT);
     if (gfx_init < 0)
     {
         printf("Something went wrong initializing the graphics system");
@@ -25,6 +25,9 @@ int main(int argc, char *argv[])
     set_field_value(&field, 1, 0, 0);
     set_field_value(&field, 1, 1, 0);
     set_field_value(&field, 2, 0, 0);
+    set_field_value(&field, 9, 0, 0);
+    set_field_value(&field, 0, 21, 0);
+    set_field_value(&field, 9, 21, 0);
 
     FieldItem item0;
     item0.field_sprite = test_sprite;
