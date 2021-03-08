@@ -20,7 +20,11 @@ int main(int argc, char *argv[])
     bool quit = false;
     Sprite *test_sprite = create_sprite("assets/tile.png");
     Field field;
-    initialize_field(&field, 22, 10);
+    initialize_field(&field, 22, 10, test_sprite->width + 1, test_sprite->height + 1);
+    set_field_value(&field, 0, 0, 0);
+    set_field_value(&field, 1, 0, 0);
+    set_field_value(&field, 1, 1, 0);
+    set_field_value(&field, 2, 0, 0);
 
     FieldItem item0;
     item0.field_sprite = test_sprite;
@@ -55,7 +59,7 @@ int main(int argc, char *argv[])
             {
                 x = start_x + i * pitch_x;
                 y = start_y - j * pitch_y;
-                draw_sprite(test_sprite, x, y);
+                //draw_sprite(test_sprite, x, y);
             }
         }
 
