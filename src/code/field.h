@@ -1,5 +1,5 @@
 #ifndef FIELD_H
-#define FIELDH
+#define FIELD_H
 #include "graphics.h"
 
 typedef struct FieldItems
@@ -16,6 +16,6 @@ typedef struct Fields
 
 void initialize_field(Field *field, int rows, int columns);
 
-void draw_field(Field *field, FieldItems *lookup_table, int center_x, int center_y);
+void draw_field(Field *field, FieldItem *lookup_table, int center_x, int center_y);
 
 #endif
