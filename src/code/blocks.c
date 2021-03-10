@@ -45,3 +45,17 @@ Block *initialize_block_list()
 
     return block_list;
 }
+
+void fill_block_instance(BlockInstance *block_instance, Field *field, Block *block_list, int value)
+{
+    int start_x = block_instance->position.x;
+    int start_y = block_instance->position.y;
+
+    for (int i = 0; i < 4; i++)
+    {
+        Coord c = block_list[block_instance->block_id].orientations[block_instance->orientation][i];
+        int current_x = start_x + c.x;
+        int current_y = start_y + c.y;
+        set_field_value(field, current_x, current_y, value);
+    }
+}

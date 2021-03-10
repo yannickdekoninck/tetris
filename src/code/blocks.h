@@ -1,5 +1,6 @@
 #ifndef BLOCKS_H
 #define BLOCKS_H
+#include "field.h"
 
 struct Coord
 {
@@ -23,5 +24,6 @@ typedef struct BlockInstance
 } BlockInstance;
 
 Block *initialize_block_list();
+void fill_block_instance(BlockInstance *block_instance, Field *field, Block *block_list, int value);
 
 #endif
