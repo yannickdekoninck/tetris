@@ -1,5 +1,6 @@
 #include "graphics.h"
 #include "field.h"
+#include "blocks.h"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -29,6 +30,14 @@ int main(int argc, char *argv[])
     set_field_value(&field, 0, 21, 0);
     set_field_value(&field, 9, 21, 0);
 
+    Block *block_list = initialize_block_list();
+    BlockInstance current_block;
+    current_block.block_id = 1;
+    current_block.orientation = 1;
+    Coord current_position;
+    current_position.x = 5;
+    current_position.y = 6;
+    current_block.position = current_position;
     FieldItem item0;
     item0.field_sprite = test_sprite;
     FieldItem lookup_table[1];
