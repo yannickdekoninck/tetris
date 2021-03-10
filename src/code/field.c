@@ -7,7 +7,13 @@ int get_field_value(Field *field, int x, int y)
 
 void set_field_value(Field *field, int x, int y, int value)
 {
-    (field->field)[y + x * field->rows] = value;
+    if ((x >= 0) & (x < field->columns) & (y >= 0) & (y < field->rows))
+    {
+        (field->field)[y + x * field->rows] = value;
+        return;
+    }
+    printf("Tried to set field value to (%d, %d) but field size is (%d, %d)", x, y, field->columns, field->rows);
+    return;
 }
 
 void initialize_field(Field *field, int rows, int columns, int pitch_x, int pitch_y)
