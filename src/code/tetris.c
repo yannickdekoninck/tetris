@@ -22,10 +22,11 @@ int main(int argc, char *argv[])
     Sprite *test_sprite = create_sprite("assets/tile.png");
     Field field;
     initialize_field(&field, 22, 10, test_sprite->width + 1, test_sprite->height + 1);
+
+    Field current_block_field;
+    initialize_field(&current_block_field, 22, 10, test_sprite->width + 1, test_sprite->height + 1);
+
     set_field_value(&field, 0, 0, 0);
-    set_field_value(&field, 1, 0, 0);
-    set_field_value(&field, 1, 1, 0);
-    set_field_value(&field, 2, 0, 0);
     set_field_value(&field, 9, 0, 0);
     set_field_value(&field, 0, 21, 0);
     set_field_value(&field, 9, 21, 0);
@@ -38,6 +39,9 @@ int main(int argc, char *argv[])
     current_position.x = 5;
     current_position.y = 6;
     current_block.position = current_position;
+
+    fill_block_instance(&current_block, &current_block_field, block_list, 0);
+
     FieldItem item0;
     item0.field_sprite = test_sprite;
     FieldItem lookup_table[1];
@@ -57,6 +61,7 @@ int main(int argc, char *argv[])
         //Fill the surface white
         clear_screen();
         draw_field(&field, lookup_table, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
+        draw_field(&current_block_field, lookup_table, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
         //Update the surface
         update_screen();
