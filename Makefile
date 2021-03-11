@@ -2,7 +2,7 @@ CC=gcc
 CFLAGS= -l SDL2 -l SDL2_image
 BUILD_DIR = build
 ASSET_DIR = $(BUILD_DIR)/assets
-OBJS=$(BUILD_DIR)/tetris.o $(BUILD_DIR)/graphics.o $(BUILD_DIR)/field.o
+OBJS=$(BUILD_DIR)/tetris.o $(BUILD_DIR)/graphics.o $(BUILD_DIR)/field.o $(BUILD_DIR)/blocks.o
 GFX=$(BUILD_DIR)/assets/tile.png
 BIN=$(BUILD_DIR)/main
 
@@ -35,5 +35,5 @@ build/assets/%.png: src/assets/cpld/%.png
 clean:
 	rm -rf build
 
-test:
+test: $(BIN)
 	$(BUILD_DIR)/main

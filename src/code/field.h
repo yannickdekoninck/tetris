@@ -9,18 +9,18 @@ typedef struct FieldItems
 
 typedef struct Fields
 {
-    short *field;
-    short rows;
-    short columns;
-    short pitch_x;
-    short pitch_y;
+    int *field;
+    int rows;
+    int columns;
+    int pitch_x;
+    int pitch_y;
 } Field;
 
-short get_field_value(Field *field, short x, short y);
+int get_field_value(Field *field, int x, int y);
 
-void set_field_value(Field *field, short x, short y, short value);
+void set_field_value(Field *field, int x, int y, int value);
 
-void initialize_field(Field *field, short rows, short columns, short pitch_x, short pitch_y);
+void initialize_field(Field *field, int rows, int columns, int pitch_x, int pitch_y);
 
 void draw_field(Field *field, FieldItem *lookup_table, int center_x, int center_y);
 

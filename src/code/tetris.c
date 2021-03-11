@@ -1,5 +1,6 @@
 #include "graphics.h"
 #include "field.h"
+#include "blocks.h"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -21,13 +22,25 @@ int main(int argc, char *argv[])
     Sprite *test_sprite = create_sprite("assets/tile.png");
     Field field;
     initialize_field(&field, 22, 10, test_sprite->width + 1, test_sprite->height + 1);
+
+    Field current_block_field;
+    initialize_field(&current_block_field, 22, 10, test_sprite->width + 1, test_sprite->height + 1);
+
     set_field_value(&field, 0, 0, 0);
-    set_field_value(&field, 1, 0, 0);
-    set_field_value(&field, 1, 1, 0);
-    set_field_value(&field, 2, 0, 0);
     set_field_value(&field, 9, 0, 0);
     set_field_value(&field, 0, 21, 0);
     set_field_value(&field, 9, 21, 0);
+
+    Block *block_list = initialize_block_list();
+    BlockInstance current_block;
+    current_block.block_id = 4;
+    current_block.orientation = 2;
+    Coord current_position;
+    current_position.x = 5;
+    current_position.y = 6;
+    current_block.position = current_position;
+
+    fill_block_instance(&current_block, &current_block_field, block_list, 0);
 
     FieldItem item0;
     item0.field_sprite = test_sprite;
@@ -48,23 +61,7 @@ int main(int argc, char *argv[])
         //Fill the surface white
         clear_screen();
         draw_field(&field, lookup_table, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
-        int rows = 40;
-        int columns = 10;
-        int start_x = SCREEN_WIDTH / 2 - columns * test_sprite->width / 2;
-        int start_y = SCREEN_HEIGHT - test_sprite->height - 20;
-        int pitch_x = test_sprite->width + 1;
-        int pitch_y = test_sprite->height + 1;
-        int x = 0;
-        int y = 0;
-        for (int i = 0; i < 10; i++)
-        {
-            for (int j = 0; j < 22; j++)
-            {
-                x = start_x + i * pitch_x;
-                y = start_y - j * pitch_y;
-                //draw_sprite(test_sprite, x, y);
-            }
-        }
+        draw_field(&current_block_field, lookup_table, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
 
         //Update the surface
         update_screen();

@@ -1,18 +1,24 @@
 #include "field.h"
 
-short get_field_value(Field *field, short x, short y)
+int get_field_value(Field *field, int x, int y)
 {
     return (field->field)[y + x * field->rows];
 }
 
-void set_field_value(Field *field, short x, short y, short value)
+void set_field_value(Field *field, int x, int y, int value)
 {
-    (field->field)[y + x * field->rows] = value;
+    if ((x >= 0) & (x < field->columns) & (y >= 0) & (y < field->rows))
+    {
+        (field->field)[y + x * field->rows] = value;
+        return;
+    }
+    printf("Tried to set field value to (%d, %d) but field size is (%d, %d)", x, y, field->columns, field->rows);
+    return;
 }
 
-void initialize_field(Field *field, short rows, short columns, short pitch_x, short pitch_y)
+void initialize_field(Field *field, int rows, int columns, int pitch_x, int pitch_y)
 {
-    short *new_field = malloc(sizeof(short) * rows * columns);
+    int *new_field = malloc(sizeof(int) * rows * columns);
     field->field = new_field;
     field->rows = rows;
     field->columns = columns;
@@ -33,7 +39,7 @@ void draw_field(Field *field, FieldItem *lookup_table, int center_x, int center_
     int x_start = center_x - field->columns * field->pitch_x / 2;
     int y_start = center_y + field->rows * field->pitch_y / 2;
 
-    short field_value;
+    int field_value;
     for (int i = 0; i < field->rows; i++)
     {
         for (int j = 0; j < field->columns; j++)
