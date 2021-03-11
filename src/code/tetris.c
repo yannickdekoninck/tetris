@@ -33,8 +33,8 @@ int main(int argc, char *argv[])
 
     Block *block_list = initialize_block_list();
     BlockInstance current_block;
-    current_block.block_id = 1;
-    current_block.orientation = 1;
+    current_block.block_id = 3;
+    current_block.orientation = 2;
     Coord current_position;
     current_position.x = 5;
     current_position.y = 6;

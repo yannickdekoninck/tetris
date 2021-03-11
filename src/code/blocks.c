@@ -84,6 +84,47 @@ Block *initialize_block_list()
     block_list[2].orientations = coords;
     block_list[2].orientations_count = 4;
 
+    // Right L
+    coords = malloc(sizeof(Coord *) * 4);
+    coords[0] = malloc(sizeof(Coord) * 4);
+    coords[0][0].x = 0;
+    coords[0][0].y = 2;
+    coords[0][1].x = 0;
+    coords[0][1].y = 1;
+    coords[0][2].x = 0;
+    coords[0][2].y = 0;
+    coords[0][3].x = 1;
+    coords[0][3].y = 0;
+    coords[1] = malloc(sizeof(Coord) * 4);
+    coords[1][0].x = 2;
+    coords[1][0].y = 0;
+    coords[1][1].x = 1;
+    coords[1][1].y = 0;
+    coords[1][2].x = 0;
+    coords[1][2].y = 0;
+    coords[1][3].x = 0;
+    coords[1][3].y = -1;
+    coords[2] = malloc(sizeof(Coord) * 4);
+    coords[2][0].x = 0;
+    coords[2][0].y = -2;
+    coords[2][1].x = 0;
+    coords[2][1].y = -1;
+    coords[2][2].x = 0;
+    coords[2][2].y = 0;
+    coords[2][3].x = -1;
+    coords[2][3].y = 0;
+    coords[3] = malloc(sizeof(Coord) * 4);
+    coords[3][0].x = 0;
+    coords[3][0].y = -1;
+    coords[3][1].x = 0;
+    coords[3][1].y = 0;
+    coords[3][2].x = 0;
+    coords[3][2].y = 1;
+    coords[3][3].x = -1;
+    coords[3][3].y = 0;
+    block_list[3].orientations = coords;
+    block_list[3].orientations_count = 4;
+
     return block_list;
 }
 
