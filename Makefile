@@ -35,5 +35,5 @@ build/assets/%.png: src/assets/cpld/%.png
 clean:
 	rm -rf build
 
-test:
+test: $(BIN)
 	$(BUILD_DIR)/main
