@@ -66,6 +66,15 @@ int main(int argc, char *argv[])
             rotate_block_instance(&current_block, block_list);
             fill_block_instance(&current_block, &current_block_field, block_list, 0);
         }
+
+        if ((frame_counter % 240) == 0)
+        {
+            fill_block_instance(&current_block, &current_block_field, block_list, -1);
+            current_block.block_id = (current_block.block_id + 1) % 5;
+            current_block.orientation = 0;
+            fill_block_instance(&current_block, &current_block_field, block_list, 0);
+        }
+
         //Fill the surface white
         clear_screen();
         draw_field(&field, lookup_table, SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2);
