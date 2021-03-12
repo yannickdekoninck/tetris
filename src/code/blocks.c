@@ -1,10 +1,10 @@
 #include "stdlib.h"
 #include "blocks.h"
 
-Block *initialize_block_list()
+void initialize_block_list()
 {
 
-    Block *block_list = malloc(sizeof(Block) * 5);
+    block_list = malloc(sizeof(Block) * 5);
     Coord **coords;
     // square
     coords = malloc(sizeof(Coord *) * 1);
@@ -165,8 +165,6 @@ Block *initialize_block_list()
     coords[3][3].y = -1;
     block_list[4].orientations = coords;
     block_list[4].orientations_count = 4;
-
-    return block_list;
 }
 
 void fill_block_instance(BlockInstance *block_instance, Field *field, Block *block_list, int value)

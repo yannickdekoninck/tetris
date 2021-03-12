@@ -16,12 +16,20 @@ typedef struct Fields
     int pitch_y;
 } Field;
 
+typedef struct FieldDrawContext
+{
+    FieldItem *lookup_table;
+    int pitch_x;
+    int pitch_y;
+
+} FieldDrawContext;
+
 int get_field_value(Field *field, int x, int y);
 
 void set_field_value(Field *field, int x, int y, int value);
 
-void initialize_field(Field *field, int rows, int columns, int pitch_x, int pitch_y);
+Field *initialize_field(int rows, int columns);
 
-void draw_field(Field *field, FieldItem *lookup_table, int center_x, int center_y);
+void draw_field(Field *field, FieldDrawContext *drawing_context, int center_x, int center_y);
 
 #endif
