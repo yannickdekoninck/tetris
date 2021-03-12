@@ -155,14 +155,14 @@ Block *initialize_block_list()
     coords[2][3].x = 1;
     coords[2][3].y = 0;
     coords[3] = malloc(sizeof(Coord) * 4);
-    coords[3][0].x = 0;
-    coords[3][0].y = -1;
-    coords[3][1].x = 0;
+    coords[3][0].x = -2;
+    coords[3][0].y = 0;
+    coords[3][1].x = -1;
     coords[3][1].y = 0;
     coords[3][2].x = 0;
-    coords[3][2].y = 1;
-    coords[3][3].x = 1;
-    coords[3][3].y = 0;
+    coords[3][2].y = 0;
+    coords[3][3].x = 0;
+    coords[3][3].y = -1;
     block_list[4].orientations = coords;
     block_list[4].orientations_count = 4;
 
