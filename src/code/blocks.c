@@ -182,3 +182,9 @@ void fill_block_instance(BlockInstance *block_instance, Field *field, Block *blo
         set_field_value(field, current_x, current_y, value);
     }
 }
+
+void rotate_block_instance(BlockInstance *block_instance, Block *block_list)
+{
+    int new_orientation = (block_instance->orientation + 1) % block_list[block_instance->block_id].orientations_count;
+    block_instance->orientation = new_orientation;
+}
