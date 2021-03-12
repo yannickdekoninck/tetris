@@ -1,6 +1,7 @@
 #include "graphics.h"
 #include "field.h"
 #include "blocks.h"
+#include "game_time.h"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -17,6 +18,7 @@ int main(int argc, char *argv[])
         printf("Something went wrong initializing the graphics system");
         return -1;
     }
+    init_gametime(60);
 
     bool quit = false;
     Sprite *test_sprite = create_sprite("assets/tile.png");
@@ -65,6 +67,7 @@ int main(int argc, char *argv[])
 
         //Update the surface
         update_screen();
+        tick();
     }
     destroy_sprite(test_sprite);
     shut_down_graphics();
