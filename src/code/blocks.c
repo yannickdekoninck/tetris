@@ -114,14 +114,14 @@ Block *initialize_block_list()
     coords[2][3].x = -1;
     coords[2][3].y = 0;
     coords[3] = malloc(sizeof(Coord) * 4);
-    coords[3][0].x = 0;
-    coords[3][0].y = -1;
-    coords[3][1].x = 0;
+    coords[3][0].x = -2;
+    coords[3][0].y = 0;
+    coords[3][1].x = -1;
     coords[3][1].y = 0;
     coords[3][2].x = 0;
-    coords[3][2].y = 1;
-    coords[3][3].x = -1;
-    coords[3][3].y = 0;
+    coords[3][2].y = 0;
+    coords[3][3].x = 0;
+    coords[3][3].y = 1;
     block_list[3].orientations = coords;
     block_list[3].orientations_count = 4;
 
@@ -155,14 +155,14 @@ Block *initialize_block_list()
     coords[2][3].x = 1;
     coords[2][3].y = 0;
     coords[3] = malloc(sizeof(Coord) * 4);
-    coords[3][0].x = 0;
-    coords[3][0].y = -1;
-    coords[3][1].x = 0;
+    coords[3][0].x = -2;
+    coords[3][0].y = 0;
+    coords[3][1].x = -1;
     coords[3][1].y = 0;
     coords[3][2].x = 0;
-    coords[3][2].y = 1;
-    coords[3][3].x = 1;
-    coords[3][3].y = 0;
+    coords[3][2].y = 0;
+    coords[3][3].x = 0;
+    coords[3][3].y = -1;
     block_list[4].orientations = coords;
     block_list[4].orientations_count = 4;
 
@@ -181,4 +181,10 @@ void fill_block_instance(BlockInstance *block_instance, Field *field, Block *blo
         int current_y = start_y + c.y;
         set_field_value(field, current_x, current_y, value);
     }
+}
+
+void rotate_block_instance(BlockInstance *block_instance, Block *block_list)
+{
+    int new_orientation = (block_instance->orientation + 1) % block_list[block_instance->block_id].orientations_count;
+    block_instance->orientation = new_orientation;
 }
