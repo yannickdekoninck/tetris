@@ -19,5 +19,11 @@ void tick()
     }
     current_time = SDL_GetTicks();
     int frames_elapsed = (current_time - last_time) / msec_per_frame;
+    frame_counter += frames_elapsed;
     last_time = current_time;
+}
+
+int get_frame_count()
+{
+    return frame_counter;
 }
