@@ -11,6 +11,13 @@ Game *initialize_game()
     Coord initial_position = {.x = 5, .y = 10};
     new_game->current_block->position = initial_position;
 
+    new_game->block_sequence = malloc(sizeof(int) * MAX_BLOCKS);
+    srand(time(NULL));
+    for (int i = 0; i < MAX_BLOCKS; i++)
+    {
+        new_game->block_sequence[i] = rand() % 5;
+    }
+
     // L
     set_field_value(new_game->game_field, 0, 0, 0);
     set_field_value(new_game->game_field, 1, 0, 0);

@@ -1,6 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include <stdlib.h>
+#include <time.h>
+
 #include "field.h"
 #include "blocks.h"
 #include "game_time.h"
