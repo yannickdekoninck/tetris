@@ -10,6 +10,59 @@ Game *initialize_game()
     new_game->current_block->orientation = 0;
     Coord initial_position = {.x = 5, .y = 10};
     new_game->current_block->position = initial_position;
+
+    // L
+    set_field_value(new_game->game_field, 0, 0, 0);
+    set_field_value(new_game->game_field, 1, 0, 0);
+    set_field_value(new_game->game_field, 0, 1, 0);
+    set_field_value(new_game->game_field, 0, 2, 0);
+
+    // I
+    set_field_value(new_game->game_field, 3, 0, 0);
+    set_field_value(new_game->game_field, 3, 1, 0);
+    set_field_value(new_game->game_field, 3, 2, 0);
+
+    // V
+    set_field_value(new_game->game_field, 5, 2, 0);
+    set_field_value(new_game->game_field, 5, 1, 0);
+    set_field_value(new_game->game_field, 6, 0, 0);
+    set_field_value(new_game->game_field, 7, 1, 0);
+    set_field_value(new_game->game_field, 7, 2, 0);
+
+    // J
+
+    set_field_value(new_game->game_field, 0, 4, 0);
+    set_field_value(new_game->game_field, 1, 5, 0);
+    set_field_value(new_game->game_field, 1, 6, 0);
+
+    // U
+
+    set_field_value(new_game->game_field, 3, 6, 0);
+    set_field_value(new_game->game_field, 3, 5, 0);
+    set_field_value(new_game->game_field, 3, 4, 0);
+    set_field_value(new_game->game_field, 4, 4, 0);
+    set_field_value(new_game->game_field, 5, 4, 0);
+    set_field_value(new_game->game_field, 5, 5, 0);
+    set_field_value(new_game->game_field, 5, 6, 0);
+
+    // L
+
+    set_field_value(new_game->game_field, 7, 6, 0);
+    set_field_value(new_game->game_field, 7, 5, 0);
+    set_field_value(new_game->game_field, 7, 4, 0);
+    set_field_value(new_game->game_field, 8, 4, 0);
+
+    // E
+
+    set_field_value(new_game->game_field, 10, 4, 0);
+    set_field_value(new_game->game_field, 10, 5, 0);
+    set_field_value(new_game->game_field, 10, 6, 0);
+    set_field_value(new_game->game_field, 10, 7, 0);
+    set_field_value(new_game->game_field, 10, 3, 0);
+    set_field_value(new_game->game_field, 11, 7, 0);
+    set_field_value(new_game->game_field, 11, 5, 0);
+    set_field_value(new_game->game_field, 11, 3, 0);
+
     return new_game;
 }
 
