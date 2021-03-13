@@ -10,20 +10,19 @@ Game *initialize_game()
     new_game->current_block->orientation = 0;
     Coord initial_position = {.x = 5, .y = 10};
     new_game->current_block->position = initial_position;
-    set_field_value(new_game->game_field, 3, 3, 0);
     return new_game;
 }
 
 void update_game(Game *game)
 {
-    /*
-        if ((frame_counter % 60) == 0)
+
+    if ((frame_counter % 60) == 0)
     {
         fill_block_instance(game->current_block, game->game_field, block_list, -1);
         rotate_block_instance(game->current_block, block_list);
         fill_block_instance(game->current_block, game->game_field, block_list, 0);
     }
-    
+
     if ((frame_counter % 240) == 0)
     {
         fill_block_instance(game->current_block, game->game_field, block_list, -1);
@@ -31,7 +30,6 @@ void update_game(Game *game)
         game->current_block->orientation = 0;
         fill_block_instance(game->current_block, game->game_field, block_list, 0);
     }
-    */
 
     // See if it's time to move down
 
