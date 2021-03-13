@@ -46,8 +46,8 @@ void draw_field(Field *field, FieldDrawContext *field_draw_context, int center_x
             field_value = get_field_value(field, j, i);
             if (field_value > -1)
             {
-                int x = x_start + field->pitch_x * j;
-                int y = y_start - field->pitch_y * i;
+                int x = x_start + field_draw_context->pitch_x * j;
+                int y = y_start - field_draw_context->pitch_y * i;
                 draw_sprite(field_draw_context->lookup_table[field_value].field_sprite, x, y);
             }
         }

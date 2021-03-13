@@ -40,10 +40,9 @@ int main(int argc, char *argv[])
             }
         }
         update_game(game);
-        printf("Updated game\n");
         //Fill the surface white
-        clear_screen();
 
+        clear_screen();
         draw_game(game);
 
         //Update the surface

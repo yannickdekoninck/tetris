@@ -10,21 +10,20 @@ Game *initialize_game()
     new_game->current_block->orientation = 0;
     Coord initial_position = {.x = 5, .y = 10};
     new_game->current_block->position = initial_position;
-
+    set_field_value(new_game->game_field, 3, 3, 0);
     return new_game;
 }
 
 void update_game(Game *game)
 {
-
     /*
-    if ((frame_counter % 60) == 0)
+        if ((frame_counter % 60) == 0)
     {
         fill_block_instance(game->current_block, game->game_field, block_list, -1);
         rotate_block_instance(game->current_block, block_list);
         fill_block_instance(game->current_block, game->game_field, block_list, 0);
     }
-
+    
     if ((frame_counter % 240) == 0)
     {
         fill_block_instance(game->current_block, game->game_field, block_list, -1);
@@ -50,10 +49,10 @@ void draw_game(Game *game)
 void initialize_draw_context()
 {
     Sprite *tile = create_sprite("assets/tile.png");
-    FieldItem item0;
-    item0.field_sprite = tile;
-    FieldItem lookup_table[1];
-    lookup_table[0] = item0;
+    FieldItem *item0 = malloc(sizeof(FieldItem));
+    item0->field_sprite = tile;
+    FieldItem *lookup_table = malloc(sizeof(FieldItem) * 1);
+    lookup_table = item0;
 
     field_draw_context = malloc(sizeof(FieldDrawContext));
     field_draw_context->lookup_table = lookup_table;
