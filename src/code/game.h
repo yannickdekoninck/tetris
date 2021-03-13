@@ -17,9 +17,9 @@ typedef struct Game
 {
     int msec_between_block_moves;
     Field *game_field;
-    Field *current_block_field;
     BlockInstance *current_block;
     int *block_sequence;
+    int sequence_id;
 
 } Game;
 

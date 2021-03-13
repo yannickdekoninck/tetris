@@ -2,15 +2,11 @@
 
 Game *initialize_game()
 {
+    // Memory allocation
     Game *new_game = malloc(sizeof(Game));
     new_game->game_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
-    new_game->current_block_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
-    new_game->current_block = malloc(sizeof(BlockInstance));
-    new_game->current_block->block_id = 0;
-    new_game->current_block->orientation = 0;
-    Coord initial_position = {.x = 5, .y = 10};
-    new_game->current_block->position = initial_position;
 
+    // Initialize the block sequence
     new_game->block_sequence = malloc(sizeof(int) * MAX_BLOCKS);
     srand(time(NULL));
     for (int i = 0; i < MAX_BLOCKS; i++)
@@ -18,25 +14,20 @@ Game *initialize_game()
         new_game->block_sequence[i] = rand() % 5;
     }
 
+    new_game->sequence_id = 0;
+
+    new_game->current_block = malloc(sizeof(BlockInstance));
+    new_game->current_block->block_id = new_game->block_sequence[0];
+    new_game->current_block->orientation = 0;
+    Coord initial_position = {.x = 4, .y = 19};
+    new_game->current_block->position = initial_position;
+
     // L
     set_field_value(new_game->game_field, 0, 0, 0);
-    set_field_value(new_game->game_field, 1, 0, 0);
-    set_field_value(new_game->game_field, 0, 1, 0);
-    set_field_value(new_game->game_field, 0, 2, 0);
+    set_field_value(new_game->game_field, 9, 0, 0);
+    set_field_value(new_game->game_field, 9, 21, 0);
+    set_field_value(new_game->game_field, 0, 21, 0);
 
-    // I
-    set_field_value(new_game->game_field, 3, 0, 0);
-    set_field_value(new_game->game_field, 3, 1, 0);
-    set_field_value(new_game->game_field, 3, 2, 0);
-
-    // V
-    set_field_value(new_game->game_field, 5, 2, 0);
-    set_field_value(new_game->game_field, 5, 1, 0);
-    set_field_value(new_game->game_field, 6, 0, 0);
-    set_field_value(new_game->game_field, 7, 1, 0);
-    set_field_value(new_game->game_field, 7, 2, 0);
-
-    
     return new_game;
 }
 
