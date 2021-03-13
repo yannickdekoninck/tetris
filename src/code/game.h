@@ -8,7 +8,7 @@
 #include "blocks.h"
 #include "game_time.h"
 
-#define FIELD_WIDTH 15
+#define FIELD_WIDTH 10
 #define FIELD_HEIGHT 22
 
 #define MAX_BLOCKS 10000
