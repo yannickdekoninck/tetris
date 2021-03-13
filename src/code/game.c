@@ -5,6 +5,7 @@ Game *initialize_game()
     // Memory allocation
     Game *new_game = malloc(sizeof(Game));
     new_game->game_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
+    new_game->current_block_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
 
     // Initialize the block sequence
     new_game->block_sequence = malloc(sizeof(int) * MAX_BLOCKS);
@@ -36,17 +37,23 @@ void update_game(Game *game)
 
     if ((frame_counter % 60) == 0)
     {
-        fill_block_instance(game->current_block, game->game_field, block_list, -1);
-        rotate_block_instance(game->current_block, block_list);
-        fill_block_instance(game->current_block, game->game_field, block_list, 0);
-    }
 
-    if ((frame_counter % 240) == 0)
-    {
-        fill_block_instance(game->current_block, game->game_field, block_list, -1);
-        game->current_block->block_id = (game->current_block->block_id + 1) % 5;
-        game->current_block->orientation = 0;
-        fill_block_instance(game->current_block, game->game_field, block_list, 0);
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        if (check_move(game->game_field, game->current_block, 0, -1))
+        {
+            game->current_block->position.y -= 1;
+            fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+        }
+        else
+        {
+            fill_block_instance(game->current_block, game->game_field, block_list, 0);
+            game->sequence_id++;
+            game->current_block->orientation = 0;
+            Coord initial_position = {.x = 4, .y = 19};
+            game->current_block->position = initial_position;
+            game->current_block->block_id = game->block_sequence[game->sequence_id];
+            fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+        }
     }
 
     // See if it's time to move down
@@ -58,6 +65,7 @@ void update_game(Game *game)
 
 void draw_game(Game *game)
 {
+    draw_field(game->current_block_field, field_draw_context, 400, 300);
     draw_field(game->game_field, field_draw_context, 400, 300);
     return;
 }
