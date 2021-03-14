@@ -3,7 +3,7 @@
 #include "blocks.h"
 #include "game_time.h"
 #include "game.h"
-#include <SDL2/SDL.h>
+#include "events.h"
 #include <stdio.h>
 #include <stdbool.h>
 //Screen dimension constants
@@ -24,21 +24,17 @@ int main(int argc, char *argv[])
     printf("Initialized draw context\n");
     initialize_block_list();
     printf("Initialized block list\n");
+    initialize_events();
     bool quit = false;
     Game *game = initialize_game();
     printf("Initialized game\n");
 
-    SDL_Event e;
-
     while (!quit)
     {
-        while (SDL_PollEvent(&e) != 0)
-        {
-            if (e.type == SDL_QUIT)
-            {
-                quit = true;
-            }
-        }
+        // getting events
+        quit = get_events();
+
+        // Updating game logic
         update_game(game);
         //Fill the surface white
 

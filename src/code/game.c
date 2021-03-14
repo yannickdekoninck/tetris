@@ -1,4 +1,5 @@
 #include "game.h"
+#include "events.h"
 
 Game *initialize_game()
 {
@@ -31,10 +32,41 @@ Game *initialize_game()
 
     return new_game;
 }
+bool move_current_block(Game *game, int dx, int dy)
+{
+    if (check_move(game->game_field, game->current_block, dx, dy))
+    {
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        game->current_block->position.x += dx;
+        game->current_block->position.y += dy;
+        fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+        return true;
+    }
+    return false;
+}
+
+void rotate_current_block(Game *game)
+{
+    int next_orientation = (game->current_block->orientation + 1) % (block_list[game->current_block->block_id].orientations_count);
+    if (check_orientation(game->game_field, game->current_block, next_orientation))
+    {
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        rotate_block_instance(game->current_block, block_list);
+        fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+    }
+}
+
+void drop_current_block(Game *game)
+{
+    while (move_current_block(game, 0, -1))
+    {
+    }
+}
 
 void update_game(Game *game)
 {
 
+    // Auto move
     if ((frame_counter % 60) == 0)
     {
 
@@ -53,6 +85,32 @@ void update_game(Game *game)
             game->current_block->position = initial_position;
             game->current_block->block_id = game->block_sequence[game->sequence_id];
             fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+        }
+    }
+    // Event checking
+
+    for (int i = 0; i < keyboard_event_counter; i++)
+    {
+        KeyboardEvent e = keyboard_events[i];
+        switch (e.key)
+        {
+        case KEYLEFT:
+            move_current_block(game, -1, 0);
+            break;
+        case KEYRIGHT:
+            move_current_block(game, +1, 0);
+            break;
+        case KEYDOWN:
+            move_current_block(game, 0, -1);
+            break;
+        case KEYUP:
+            rotate_current_block(game);
+            break;
+        case KEYSPACE:
+            drop_current_block(game);
+            break;
+        default:
+            break;
         }
     }
 

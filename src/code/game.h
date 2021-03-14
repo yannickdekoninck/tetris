@@ -30,6 +30,12 @@ void update_game(Game *game);
 
 void draw_game(Game *game);
 
+bool move_current_block(Game *game, int dx, int dy);
+
+void rotate_current_block(Game *game);
+
+void drop_current_block(Game *game);
+
 FieldDrawContext *field_draw_context;
 void initialize_draw_context();
 
