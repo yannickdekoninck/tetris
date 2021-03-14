@@ -42,6 +42,18 @@ void move_current_block(Game *game, int dx, int dy)
         fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
     }
 }
+
+void rotate_current_block(Game *game)
+{
+    int next_orientation = (game->current_block->orientation + 1) % (block_list[game->current_block->block_id].orientations_count);
+    if (check_orientation(game->game_field, game->current_block, next_orientation))
+    {
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        rotate_block_instance(game->current_block, block_list);
+        fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+    }
+}
+
 void update_game(Game *game)
 {
 
@@ -66,7 +78,6 @@ void update_game(Game *game)
             fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
         }
     }
-
     // Event checking
 
     for (int i = 0; i < keyboard_event_counter; i++)
@@ -82,6 +93,9 @@ void update_game(Game *game)
             break;
         case KEYDOWN:
             move_current_block(game, 0, -1);
+            break;
+        case KEYUP:
+            rotate_current_block(game);
             break;
         default:
             break;
