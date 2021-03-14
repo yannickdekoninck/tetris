@@ -1,10 +1,10 @@
 #include "stdlib.h"
 #include "blocks.h"
 
-Block *initialize_block_list()
+void initialize_block_list()
 {
 
-    Block *block_list = malloc(sizeof(Block) * 5);
+    block_list = malloc(sizeof(Block) * 5);
     Coord **coords;
     // square
     coords = malloc(sizeof(Coord *) * 1);
@@ -165,8 +165,6 @@ Block *initialize_block_list()
     coords[3][3].y = -1;
     block_list[4].orientations = coords;
     block_list[4].orientations_count = 4;
-
-    return block_list;
 }
 
 void fill_block_instance(BlockInstance *block_instance, Field *field, Block *block_list, int value)
@@ -187,4 +185,42 @@ void rotate_block_instance(BlockInstance *block_instance, Block *block_list)
 {
     int new_orientation = (block_instance->orientation + 1) % block_list[block_instance->block_id].orientations_count;
     block_instance->orientation = new_orientation;
+}
+
+bool check_move(Field *field, BlockInstance *block_instance, int dx, int dy)
+{
+    int base_x = block_instance->position.x + dx;
+    int base_y = block_instance->position.y + dy;
+    Coord *coord_list = block_list[block_instance->block_id].orientations[block_instance->orientation];
+    for (int i = 0; i < 4; i++)
+    {
+        int x = base_x + coord_list[i].x;
+        int y = base_y + coord_list[i].y;
+
+        // check out of bounds
+        if (x < 0)
+        {
+            return false;
+        }
+        if (x >= field->columns)
+        {
+            return false;
+        }
+        if (y < 0)
+        {
+            return false;
+        }
+        if (y >= field->rows)
+        {
+            return false;
+        }
+        // check colission
+
+        if (get_field_value(field, x, y) > -1)
+        {
+            return false;
+        }
+    }
+
+    return true;
 }

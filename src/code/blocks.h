@@ -2,6 +2,8 @@
 #define BLOCKS_H
 #include "field.h"
 
+#include "stdbool.h"
+
 struct Coord
 {
     int x;
@@ -23,9 +25,11 @@ typedef struct BlockInstance
     int orientation;
 } BlockInstance;
 
-Block *initialize_block_list();
+void initialize_block_list();
 void fill_block_instance(BlockInstance *block_instance, Field *field, Block *block_list, int value);
 
 void rotate_block_instance(BlockInstance *block_instance, Block *block_list);
+bool check_move(Field *field, BlockInstance *block_instance, int dx, int dy);
+Block *block_list;
 
 #endif
