@@ -24,6 +24,7 @@ int main(int argc, char *argv[])
     printf("Initialized draw context\n");
     initialize_block_list();
     printf("Initialized block list\n");
+    initialize_events();
     bool quit = false;
     Game *game = initialize_game();
     printf("Initialized game\n");
