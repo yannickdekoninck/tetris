@@ -3,6 +3,7 @@
 #include "blocks.h"
 #include "game_time.h"
 #include "game.h"
+#include "events.h"
 #include <SDL2/SDL.h>
 #include <stdio.h>
 #include <stdbool.h>
@@ -28,17 +29,12 @@ int main(int argc, char *argv[])
     Game *game = initialize_game();
     printf("Initialized game\n");
 
-    SDL_Event e;
-
     while (!quit)
     {
-        while (SDL_PollEvent(&e) != 0)
-        {
-            if (e.type == SDL_QUIT)
-            {
-                quit = true;
-            }
-        }
+        // getting events
+        quit = get_events();
+
+        // Updating game logic
         update_game(game);
         //Fill the surface white
 
