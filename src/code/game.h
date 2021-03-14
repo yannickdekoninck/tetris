@@ -30,6 +30,8 @@ void update_game(Game *game);
 
 void draw_game(Game *game);
 
+void move_current_block(Game *game, int dx, int dy);
+
 FieldDrawContext *field_draw_context;
 void initialize_draw_context();
 
