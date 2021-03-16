@@ -59,6 +59,7 @@ void drop_current_block(Game *game)
     while (move_current_block(game, 0, -1))
     {
     }
+
     block_down(game);
 }
 
@@ -74,8 +75,47 @@ void next_block(Game *game)
 void block_down(Game *game)
 {
     fill_block_instance(game->current_block, game->game_field, block_list, 0);
+    fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+    check_lines(game);
     game->sequence_id++;
     next_block(game);
+}
+
+void check_lines(Game *game)
+{
+    // loop over rows
+    for (int i = 0; i < game->game_field->rows; i++)
+    {
+        bool all_filled = true;
+
+        for (int j = 0; j < game->game_field->columns; j++)
+        {
+            int value = get_field_value(game->game_field, j, i);
+            if (value < 0)
+            {
+                all_filled = false;
+            }
+        }
+        if (all_filled)
+        {
+            // Line!!
+            for (int ii = i + 1; ii < game->game_field->rows; ii++)
+            {
+                for (int j = 0; j < game->game_field->columns; j++)
+                {
+                    int new_value = get_field_value(game->game_field, j, ii);
+                    set_field_value(game->game_field, j, ii - 1, new_value);
+                }
+            }
+            // clean up top line
+
+            for (int j = 0; j < game->game_field->columns; j++)
+            {
+                set_field_value(game->game_field, j, game->game_field->rows - 1, -1);
+            }
+            i = -1;
+        }
+    }
 }
 
 void update_game(Game *game)

@@ -39,8 +39,10 @@ void drop_current_block(Game *game);
 FieldDrawContext *field_draw_context;
 void initialize_draw_context();
 
-void next_block(Game * game);
+void next_block(Game *game);
 
-void block_down(Game* game);
+void block_down(Game *game);
+
+void check_lines(Game *game);
 
 #endif
