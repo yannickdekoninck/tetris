@@ -19,16 +19,14 @@ Game *initialize_game()
     new_game->sequence_id = 0;
 
     new_game->current_block = malloc(sizeof(BlockInstance));
-    new_game->current_block->block_id = new_game->block_sequence[0];
-    new_game->current_block->orientation = 0;
-    Coord initial_position = {.x = 4, .y = 19};
-    new_game->current_block->position = initial_position;
 
     // L
     set_field_value(new_game->game_field, 0, 0, 0);
     set_field_value(new_game->game_field, 9, 0, 0);
     set_field_value(new_game->game_field, 9, 21, 0);
     set_field_value(new_game->game_field, 0, 21, 0);
+
+    next_block(new_game);
 
     return new_game;
 }
@@ -63,6 +61,15 @@ void drop_current_block(Game *game)
     }
 }
 
+void next_block(Game *game)
+{
+    game->current_block->block_id = game->block_sequence[game->sequence_id];
+    game->current_block->orientation = 0;
+    Coord initial_position = {.x = 4, .y = 19};
+    game->current_block->position = initial_position;
+    fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+}
+
 void update_game(Game *game)
 {
 
@@ -80,11 +87,7 @@ void update_game(Game *game)
         {
             fill_block_instance(game->current_block, game->game_field, block_list, 0);
             game->sequence_id++;
-            game->current_block->orientation = 0;
-            Coord initial_position = {.x = 4, .y = 19};
-            game->current_block->position = initial_position;
-            game->current_block->block_id = game->block_sequence[game->sequence_id];
-            fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+            next_block(game);
         }
     }
     // Event checking
