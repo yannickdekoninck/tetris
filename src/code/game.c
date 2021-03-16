@@ -20,11 +20,11 @@ Game *initialize_game()
 
     new_game->current_block = malloc(sizeof(BlockInstance));
 
+    new_game->total_lines = 0;
+
     // L
     set_field_value(new_game->game_field, 0, 0, 0);
     set_field_value(new_game->game_field, 9, 0, 0);
-    set_field_value(new_game->game_field, 9, 21, 0);
-    set_field_value(new_game->game_field, 0, 21, 0);
 
     next_block(new_game);
 
@@ -99,6 +99,8 @@ void check_lines(Game *game)
         if (all_filled)
         {
             // Line!!
+            game->total_lines++;
+            printf("We have %d lines!\n", game->total_lines);
             for (int ii = i + 1; ii < game->game_field->rows; ii++)
             {
                 for (int j = 0; j < game->game_field->columns; j++)

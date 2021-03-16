@@ -21,6 +21,7 @@ typedef struct Game
     BlockInstance *current_block;
     int *block_sequence;
     int sequence_id;
+    int total_lines;
 
 } Game;
 
