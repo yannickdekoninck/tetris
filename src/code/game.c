@@ -59,6 +59,7 @@ void drop_current_block(Game *game)
     while (move_current_block(game, 0, -1))
     {
     }
+    block_down(game);
 }
 
 void next_block(Game *game)
@@ -68,6 +69,13 @@ void next_block(Game *game)
     Coord initial_position = {.x = 4, .y = 19};
     game->current_block->position = initial_position;
     fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+}
+
+void block_down(Game *game)
+{
+    fill_block_instance(game->current_block, game->game_field, block_list, 0);
+    game->sequence_id++;
+    next_block(game);
 }
 
 void update_game(Game *game)
@@ -85,9 +93,7 @@ void update_game(Game *game)
         }
         else
         {
-            fill_block_instance(game->current_block, game->game_field, block_list, 0);
-            game->sequence_id++;
-            next_block(game);
+            block_down(game);
         }
     }
     // Event checking

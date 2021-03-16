@@ -41,4 +41,6 @@ void initialize_draw_context();
 
 void next_block(Game * game);
 
+void block_down(Game* game);
+
 #endif
