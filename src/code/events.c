@@ -63,6 +63,11 @@ bool get_events()
         {
             int button_id = e.jbutton.button;
             printf("Button pushed: %d\n", button_id);
+            if (button_id == 2)
+            {
+                keyboard_events[keyboard_event_counter].key = KEYSPACE;
+                keyboard_event_counter++;
+            }
         }
         if (e.type == SDL_JOYAXISMOTION)
         {
