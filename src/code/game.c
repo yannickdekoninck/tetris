@@ -19,16 +19,14 @@ Game *initialize_game()
     new_game->sequence_id = 0;
 
     new_game->current_block = malloc(sizeof(BlockInstance));
-    new_game->current_block->block_id = new_game->block_sequence[0];
-    new_game->current_block->orientation = 0;
-    Coord initial_position = {.x = 4, .y = 19};
-    new_game->current_block->position = initial_position;
+
+    new_game->total_lines = 0;
 
     // L
     set_field_value(new_game->game_field, 0, 0, 0);
     set_field_value(new_game->game_field, 9, 0, 0);
-    set_field_value(new_game->game_field, 9, 21, 0);
-    set_field_value(new_game->game_field, 0, 21, 0);
+
+    next_block(new_game);
 
     return new_game;
 }
@@ -61,6 +59,65 @@ void drop_current_block(Game *game)
     while (move_current_block(game, 0, -1))
     {
     }
+
+    block_down(game);
+}
+
+void next_block(Game *game)
+{
+    game->current_block->block_id = game->block_sequence[game->sequence_id];
+    game->current_block->orientation = 0;
+    Coord initial_position = {.x = 4, .y = 19};
+    game->current_block->position = initial_position;
+    fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+}
+
+void block_down(Game *game)
+{
+    fill_block_instance(game->current_block, game->game_field, block_list, 0);
+    fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+    check_lines(game);
+    game->sequence_id++;
+    next_block(game);
+}
+
+void check_lines(Game *game)
+{
+    // loop over rows
+    for (int i = 0; i < game->game_field->rows; i++)
+    {
+        bool all_filled = true;
+
+        for (int j = 0; j < game->game_field->columns; j++)
+        {
+            int value = get_field_value(game->game_field, j, i);
+            if (value < 0)
+            {
+                all_filled = false;
+            }
+        }
+        if (all_filled)
+        {
+            // Line!!
+            game->total_lines++;
+            printf("We have %d lines!\n", game->total_lines);
+            for (int ii = i + 1; ii < game->game_field->rows; ii++)
+            {
+                for (int j = 0; j < game->game_field->columns; j++)
+                {
+                    int new_value = get_field_value(game->game_field, j, ii);
+                    set_field_value(game->game_field, j, ii - 1, new_value);
+                }
+            }
+            // clean up top line
+
+            for (int j = 0; j < game->game_field->columns; j++)
+            {
+                set_field_value(game->game_field, j, game->game_field->rows - 1, -1);
+            }
+            i = -1;
+        }
+    }
 }
 
 void update_game(Game *game)
@@ -78,13 +135,7 @@ void update_game(Game *game)
         }
         else
         {
-            fill_block_instance(game->current_block, game->game_field, block_list, 0);
-            game->sequence_id++;
-            game->current_block->orientation = 0;
-            Coord initial_position = {.x = 4, .y = 19};
-            game->current_block->position = initial_position;
-            game->current_block->block_id = game->block_sequence[game->sequence_id];
-            fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+            block_down(game);
         }
     }
     // Event checking
