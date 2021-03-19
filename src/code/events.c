@@ -64,6 +64,41 @@ bool get_events()
             int button_id = e.jbutton.button;
             printf("Button pushed: %d\n", button_id);
         }
+        if (e.type == SDL_JOYAXISMOTION)
+        {
+            // Axis 0 = x
+            // Axis 1 = y
+            int threshold = 32000;
+            int joystick_axis = e.jaxis.axis;
+            int axis_value = e.jaxis.value;
+
+            if (joystick_axis == 0)
+            {
+                if (axis_value < -threshold)
+                {
+                    keyboard_events[keyboard_event_counter].key = KEYLEFT;
+                    keyboard_event_counter++;
+                }
+                if (axis_value > threshold)
+                {
+                    keyboard_events[keyboard_event_counter].key = KEYRIGHT;
+                    keyboard_event_counter++;
+                }
+            }
+            if (joystick_axis == 1)
+            {
+                if (axis_value < -threshold)
+                {
+                    keyboard_events[keyboard_event_counter].key = KEYUP;
+                    keyboard_event_counter++;
+                }
+                if (axis_value > threshold)
+                {
+                    keyboard_events[keyboard_event_counter].key = KEYDOWN;
+                    keyboard_event_counter++;
+                }
+            }
+        }
     }
     return quit;
 }
