@@ -1,10 +1,25 @@
 #include "SDL2/SDL.h"
 #include "events.h"
 
+void initialize_gamepads()
+{
+    int number_of_joysticks = SDL_NumJoysticks();
+    printf("Number of joysticks: %d\n", number_of_joysticks);
+    if (number_of_joysticks > 0)
+    {
+        gamepads = malloc(sizeof(SDL_Joystick *) * number_of_joysticks);
+        for (int i = 0; i < number_of_joysticks; i++)
+        {
+            gamepads[i] = SDL_JoystickOpen(i);
+        }
+    }
+}
+
 void initialize_events()
 {
     keyboard_event_counter = 0;
     keyboard_events = malloc(sizeof(int) * EVENTBUFFERSIZE);
+    initialize_gamepads();
 }
 
 bool get_events()
@@ -43,6 +58,11 @@ bool get_events()
                 keyboard_event_counter--;
             }
             keyboard_event_counter++;
+        }
+        if (e.type == SDL_JOYBUTTONDOWN)
+        {
+            int button_id = e.jbutton.button;
+            printf("Button pushed: %d\n", button_id);
         }
     }
     return quit;
