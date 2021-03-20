@@ -26,8 +26,21 @@ int main(int argc, char *argv[])
     printf("Initialized block list\n");
     initialize_events();
     bool quit = false;
-    Game *game_left = initialize_game(0);
-    Game *game_right = initialize_game(0);
+    int game_left_channel = 0;
+    int game_right_channel = 0;
+
+    if (number_of_joysticks == 1)
+    {
+        game_left_channel = 1;
+    }
+    if (number_of_joysticks == 2)
+    {
+        game_left_channel = 1;
+        game_right_channel = 2;
+    }
+
+    Game *game_left = initialize_game(game_left_channel);
+    Game *game_right = initialize_game(game_right_channel);
     printf("Initialized game\n");
 
     while (!quit)

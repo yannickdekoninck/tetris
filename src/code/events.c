@@ -3,7 +3,7 @@
 
 void initialize_gamepads()
 {
-    int number_of_joysticks = SDL_NumJoysticks();
+    number_of_joysticks = SDL_NumJoysticks();
     printf("Number of joysticks: %d\n", number_of_joysticks);
     if (number_of_joysticks > 0)
     {

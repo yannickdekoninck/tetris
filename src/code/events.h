@@ -29,5 +29,6 @@ void initialize_gamepads();
 bool get_events();
 
 SDL_Joystick **gamepads;
+int number_of_joysticks;
 
 #endif
