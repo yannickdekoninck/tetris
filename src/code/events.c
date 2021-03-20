@@ -64,7 +64,6 @@ bool get_events()
         {
             input_events[input_event_counter].channel = e.jbutton.which + 1;
             int button_id = e.jbutton.button;
-            printf("Button pushed: %d\n", e.jbutton.which);
             if (button_id == 2)
             {
                 input_events[input_event_counter].key = KEYSPACE;
