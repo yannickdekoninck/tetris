@@ -1,12 +1,15 @@
 #include "game.h"
 #include "events.h"
 
-Game *initialize_game()
+Game *initialize_game(int input_channel)
 {
+
     // Memory allocation
     Game *new_game = malloc(sizeof(Game));
     new_game->game_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
     new_game->current_block_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
+
+    new_game->input_channel = input_channel;
 
     // Initialize the block sequence
     new_game->block_sequence = malloc(sizeof(int) * MAX_BLOCKS);
@@ -143,25 +146,28 @@ void update_game(Game *game)
     for (int i = 0; i < input_event_counter; i++)
     {
         InputEvent e = input_events[i];
-        switch (e.key)
+        if (e.channel == game->input_channel)
         {
-        case KEYLEFT:
-            move_current_block(game, -1, 0);
-            break;
-        case KEYRIGHT:
-            move_current_block(game, +1, 0);
-            break;
-        case KEYDOWN:
-            move_current_block(game, 0, -1);
-            break;
-        case KEYUP:
-            rotate_current_block(game);
-            break;
-        case KEYSPACE:
-            drop_current_block(game);
-            break;
-        default:
-            break;
+            switch (e.key)
+            {
+            case KEYLEFT:
+                move_current_block(game, -1, 0);
+                break;
+            case KEYRIGHT:
+                move_current_block(game, +1, 0);
+                break;
+            case KEYDOWN:
+                move_current_block(game, 0, -1);
+                break;
+            case KEYUP:
+                rotate_current_block(game);
+                break;
+            case KEYSPACE:
+                drop_current_block(game);
+                break;
+            default:
+                break;
+            }
         }
     }
 

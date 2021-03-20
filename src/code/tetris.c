@@ -26,8 +26,8 @@ int main(int argc, char *argv[])
     printf("Initialized block list\n");
     initialize_events();
     bool quit = false;
-    Game *game_left = initialize_game();
-    Game *game_right = initialize_game();
+    Game *game_left = initialize_game(0);
+    Game *game_right = initialize_game(0);
     printf("Initialized game\n");
 
     while (!quit)

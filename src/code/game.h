@@ -22,10 +22,11 @@ typedef struct Game
     int *block_sequence;
     int sequence_id;
     int total_lines;
+    int input_channel;
 
 } Game;
 
-Game *initialize_game();
+Game *initialize_game(int input_channel);
 
 void update_game(Game *game);
 
