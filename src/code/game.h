@@ -29,7 +29,7 @@ Game *initialize_game();
 
 void update_game(Game *game);
 
-void draw_game(Game *game);
+void draw_game(Game *game, int draw_x);
 
 bool move_current_block(Game *game, int dx, int dy);
 

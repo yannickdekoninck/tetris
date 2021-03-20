@@ -26,7 +26,8 @@ int main(int argc, char *argv[])
     printf("Initialized block list\n");
     initialize_events();
     bool quit = false;
-    Game *game = initialize_game();
+    Game *game_left = initialize_game();
+    Game *game_right = initialize_game();
     printf("Initialized game\n");
 
     while (!quit)
@@ -35,11 +36,13 @@ int main(int argc, char *argv[])
         quit = get_events();
 
         // Updating game logic
-        update_game(game);
+        update_game(game_left);
+        update_game(game_right);
         //Fill the surface white
 
         clear_screen();
-        draw_game(game);
+        draw_game(game_left, 230);
+        draw_game(game_right, 580);
 
         //Update the surface
         update_screen();

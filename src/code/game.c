@@ -172,10 +172,10 @@ void update_game(Game *game)
     // Check if that will finish the line
 }
 
-void draw_game(Game *game)
+void draw_game(Game *game, int draw_x)
 {
-    draw_field(game->current_block_field, field_draw_context, 400, 300);
-    draw_field(game->game_field, field_draw_context, 400, 300);
+    draw_field(game->current_block_field, field_draw_context, draw_x, 300);
+    draw_field(game->game_field, field_draw_context, draw_x, 300);
     return;
 }
 
