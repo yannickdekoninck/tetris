@@ -15,6 +15,7 @@ typedef struct KeyboardEvent
 {
     int key;
     bool key_down;
+    int channel;
 
 } KeyboardEvent;
 
