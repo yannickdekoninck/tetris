@@ -140,9 +140,9 @@ void update_game(Game *game)
     }
     // Event checking
 
-    for (int i = 0; i < keyboard_event_counter; i++)
+    for (int i = 0; i < input_event_counter; i++)
     {
-        KeyboardEvent e = keyboard_events[i];
+        InputEvent e = input_events[i];
         switch (e.key)
         {
         case KEYLEFT:
