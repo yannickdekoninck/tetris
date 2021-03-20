@@ -36,6 +36,7 @@ bool get_events()
 
         if (e.type == SDL_KEYDOWN)
         {
+            input_events[input_event_counter].channel = 0;
             switch (e.key.keysym.sym)
             {
             case SDLK_UP:
@@ -61,8 +62,9 @@ bool get_events()
         }
         if (e.type == SDL_JOYBUTTONDOWN)
         {
+            input_events[input_event_counter].channel = e.jbutton.which + 1;
             int button_id = e.jbutton.button;
-            printf("Button pushed: %d\n", button_id);
+            printf("Button pushed: %d\n", e.jbutton.which);
             if (button_id == 2)
             {
                 input_events[input_event_counter].key = KEYSPACE;
@@ -76,6 +78,7 @@ bool get_events()
             int threshold = 32000;
             int joystick_axis = e.jaxis.axis;
             int axis_value = e.jaxis.value;
+            input_events[input_event_counter].channel = e.jaxis.which + 1;
 
             if (joystick_axis == 0)
             {
