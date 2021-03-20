@@ -23,6 +23,10 @@ int keyboard_event_counter;
 
 void initialize_events();
 
+void initialize_gamepads();
+
 bool get_events();
+
+SDL_Joystick **gamepads;
 
 #endif
