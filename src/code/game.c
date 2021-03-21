@@ -6,8 +6,8 @@ Game *initialize_game(int input_channel)
 
     // Memory allocation
     Game *new_game = malloc(sizeof(Game));
-    new_game->game_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
-    new_game->current_block_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
+    new_game->game_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH, -1);
+    new_game->current_block_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH, -2);
 
     new_game->input_channel = input_channel;
 

@@ -28,7 +28,7 @@ int get_field_value(Field *field, int x, int y);
 
 void set_field_value(Field *field, int x, int y, int value);
 
-Field *initialize_field(int rows, int columns);
+Field *initialize_field(int rows, int columns, int background_value);
 
 void draw_field(Field *field, FieldDrawContext *drawing_context, int center_x, int center_y);
 

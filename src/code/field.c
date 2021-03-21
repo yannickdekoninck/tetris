@@ -16,7 +16,7 @@ void set_field_value(Field *field, int x, int y, int value)
     return;
 }
 
-Field *initialize_field(int rows, int columns)
+Field *initialize_field(int rows, int columns, int background_value)
 {
     Field *field = malloc(sizeof(Field));
     int *new_field = malloc(sizeof(int) * rows * columns);
@@ -27,7 +27,7 @@ Field *initialize_field(int rows, int columns)
     {
         for (int j = 0; j < columns; j++)
         {
-            set_field_value(field, j, i, -1);
+            set_field_value(field, j, i, background_value);
         }
     }
     return field;
@@ -44,11 +44,11 @@ void draw_field(Field *field, FieldDrawContext *field_draw_context, int center_x
         for (int j = 0; j < field->columns; j++)
         {
             field_value = get_field_value(field, j, i);
-            if (field_value > -1)
+            if (field_value > -2)
             {
 
                 int lookup_table_id = 0;
-                if (field_value > 100)
+                if (field_value > -1)
                 {
                     lookup_table_id = 1;
                 }
