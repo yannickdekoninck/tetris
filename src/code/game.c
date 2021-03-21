@@ -37,7 +37,7 @@ bool move_current_block(Game *game, int dx, int dy)
 {
     if (check_move(game->game_field, game->current_block, dx, dy))
     {
-        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -2);
         game->current_block->position.x += dx;
         game->current_block->position.y += dy;
         fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
@@ -130,7 +130,7 @@ void update_game(Game *game)
     if ((frame_counter % 60) == 0)
     {
 
-        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -2);
         if (check_move(game->game_field, game->current_block, 0, -1))
         {
             game->current_block->position.y -= 1;
@@ -180,8 +180,9 @@ void update_game(Game *game)
 
 void draw_game(Game *game, int draw_x)
 {
-    draw_field(game->current_block_field, field_draw_context, draw_x, 300);
-    draw_field(game->game_field, field_draw_context, draw_x, 300);
+    //draw_field(game->current_block_field, field_draw_context, draw_x, 300);
+    Field *field_to_draw = merge_fields(game->current_block_field, game->game_field);
+    draw_field(field_to_draw, field_draw_context, draw_x, 300);
     return;
 }
 

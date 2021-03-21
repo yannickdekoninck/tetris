@@ -32,4 +32,6 @@ Field *initialize_field(int rows, int columns, int background_value);
 
 void draw_field(Field *field, FieldDrawContext *drawing_context, int center_x, int center_y);
 
+Field *merge_fields(Field *field1, Field *field2);
+
 #endif

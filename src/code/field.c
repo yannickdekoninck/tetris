@@ -33,6 +33,29 @@ Field *initialize_field(int rows, int columns, int background_value)
     return field;
 }
 
+Field *merge_fields(Field *field1, Field *field2)
+{
+
+    int columns = field1->columns;
+    int rows = field1->rows;
+    Field *output_field = initialize_field(rows, columns, -1);
+    for (int i = 0; i < columns; i++)
+    {
+        for (int j = 0; j < rows; j++)
+        {
+            int field1_value = get_field_value(field1, i, j);
+            int field2_value = get_field_value(field2, i, j);
+            int set_value = field1_value;
+            if (field2_value > field1_value)
+            {
+                set_value = field2_value;
+            }
+            set_field_value(output_field, i, j, set_value);
+        }
+    }
+    return output_field;
+}
+
 void draw_field(Field *field, FieldDrawContext *field_draw_context, int center_x, int center_y)
 {
     int x_start = center_x - field->columns * field_draw_context->pitch_x / 2;
