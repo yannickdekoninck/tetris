@@ -103,7 +103,7 @@ void check_lines(Game *game)
         {
             // Line!!
             game->total_lines++;
-            printf("We have %d lines!\n", game->total_lines);
+            printf("[Channel %d] We have %d lines!\n", game->input_channel, game->total_lines);
             for (int ii = i + 1; ii < game->game_field->rows; ii++)
             {
                 for (int j = 0; j < game->game_field->columns; j++)
