@@ -22,14 +22,15 @@ typedef struct Game
     int *block_sequence;
     int sequence_id;
     int total_lines;
+    int input_channel;
 
 } Game;
 
-Game *initialize_game();
+Game *initialize_game(int input_channel);
 
 void update_game(Game *game);
 
-void draw_game(Game *game);
+void draw_game(Game *game, int draw_x);
 
 bool move_current_block(Game *game, int dx, int dy);
 

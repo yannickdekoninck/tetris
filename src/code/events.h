@@ -11,15 +11,16 @@
 
 #define EVENTBUFFERSIZE 100
 
-typedef struct KeyboardEvent
+typedef struct InputEvent
 {
     int key;
     bool key_down;
+    int channel;
 
-} KeyboardEvent;
+} InputEvent;
 
-KeyboardEvent *keyboard_events;
-int keyboard_event_counter;
+InputEvent *input_events;
+int input_event_counter;
 
 void initialize_events();
 
@@ -28,5 +29,6 @@ void initialize_gamepads();
 bool get_events();
 
 SDL_Joystick **gamepads;
+int number_of_joysticks;
 
 #endif

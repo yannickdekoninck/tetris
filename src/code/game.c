@@ -1,12 +1,15 @@
 #include "game.h"
 #include "events.h"
 
-Game *initialize_game()
+Game *initialize_game(int input_channel)
 {
+
     // Memory allocation
     Game *new_game = malloc(sizeof(Game));
-    new_game->game_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
-    new_game->current_block_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH);
+    new_game->game_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH, -1);
+    new_game->current_block_field = initialize_field(FIELD_HEIGHT, FIELD_WIDTH, -2);
+
+    new_game->input_channel = input_channel;
 
     // Initialize the block sequence
     new_game->block_sequence = malloc(sizeof(int) * MAX_BLOCKS);
@@ -34,7 +37,7 @@ bool move_current_block(Game *game, int dx, int dy)
 {
     if (check_move(game->game_field, game->current_block, dx, dy))
     {
-        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -2);
         game->current_block->position.x += dx;
         game->current_block->position.y += dy;
         fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
@@ -100,7 +103,7 @@ void check_lines(Game *game)
         {
             // Line!!
             game->total_lines++;
-            printf("We have %d lines!\n", game->total_lines);
+            printf("[Channel %d] We have %d lines!\n", game->input_channel, game->total_lines);
             for (int ii = i + 1; ii < game->game_field->rows; ii++)
             {
                 for (int j = 0; j < game->game_field->columns; j++)
@@ -127,7 +130,7 @@ void update_game(Game *game)
     if ((frame_counter % 60) == 0)
     {
 
-        fill_block_instance(game->current_block, game->current_block_field, block_list, -1);
+        fill_block_instance(game->current_block, game->current_block_field, block_list, -2);
         if (check_move(game->game_field, game->current_block, 0, -1))
         {
             game->current_block->position.y -= 1;
@@ -140,28 +143,31 @@ void update_game(Game *game)
     }
     // Event checking
 
-    for (int i = 0; i < keyboard_event_counter; i++)
+    for (int i = 0; i < input_event_counter; i++)
     {
-        KeyboardEvent e = keyboard_events[i];
-        switch (e.key)
+        InputEvent e = input_events[i];
+        if (e.channel == game->input_channel)
         {
-        case KEYLEFT:
-            move_current_block(game, -1, 0);
-            break;
-        case KEYRIGHT:
-            move_current_block(game, +1, 0);
-            break;
-        case KEYDOWN:
-            move_current_block(game, 0, -1);
-            break;
-        case KEYUP:
-            rotate_current_block(game);
-            break;
-        case KEYSPACE:
-            drop_current_block(game);
-            break;
-        default:
-            break;
+            switch (e.key)
+            {
+            case KEYLEFT:
+                move_current_block(game, -1, 0);
+                break;
+            case KEYRIGHT:
+                move_current_block(game, +1, 0);
+                break;
+            case KEYDOWN:
+                move_current_block(game, 0, -1);
+                break;
+            case KEYUP:
+                rotate_current_block(game);
+                break;
+            case KEYSPACE:
+                drop_current_block(game);
+                break;
+            default:
+                break;
+            }
         }
     }
 
@@ -172,23 +178,30 @@ void update_game(Game *game)
     // Check if that will finish the line
 }
 
-void draw_game(Game *game)
+void draw_game(Game *game, int draw_x)
 {
-    draw_field(game->current_block_field, field_draw_context, 400, 300);
-    draw_field(game->game_field, field_draw_context, 400, 300);
+    //draw_field(game->current_block_field, field_draw_context, draw_x, 300);
+    Field *field_to_draw = merge_fields(game->current_block_field, game->game_field);
+    draw_field(field_to_draw, field_draw_context, draw_x, 300);
     return;
 }
 
 void initialize_draw_context()
 {
-    Sprite *tile = create_sprite("assets/tile.png");
+    printf("About to initialize fraw context");
+    Sprite *tile_light = create_sprite("assets/tile_light.png");
+    Sprite *tile_dark = create_sprite("assets/tile_dark.png");
     FieldItem *item0 = malloc(sizeof(FieldItem));
-    item0->field_sprite = tile;
-    FieldItem *lookup_table = malloc(sizeof(FieldItem) * 1);
-    lookup_table = item0;
+    item0->field_sprite = tile_light;
+    FieldItem *item1 = malloc(sizeof(FieldItem));
+    item1->field_sprite = tile_dark;
+    FieldItem **lookup_table = malloc(sizeof(FieldItem *) * 2);
+    lookup_table[0] = item0;
+    lookup_table[1] = item1;
+    printf("Lookup table created\n");
 
     field_draw_context = malloc(sizeof(FieldDrawContext));
     field_draw_context->lookup_table = lookup_table;
-    field_draw_context->pitch_x = tile->width + 1;
-    field_draw_context->pitch_y = tile->height + 1;
+    field_draw_context->pitch_x = tile_light->width + 1;
+    field_draw_context->pitch_y = tile_light->height + 1;
 }
