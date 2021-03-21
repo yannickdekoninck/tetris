@@ -20,6 +20,7 @@ int main(int argc, char *argv[])
         return -1;
     }
     init_gametime(60);
+    printf("Initialized game time\n");
     initialize_draw_context();
     printf("Initialized draw context\n");
     initialize_block_list();

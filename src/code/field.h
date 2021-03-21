@@ -18,7 +18,7 @@ typedef struct Fields
 
 typedef struct FieldDrawContext
 {
-    FieldItem *lookup_table;
+    FieldItem **lookup_table;
     int pitch_x;
     int pitch_y;
 

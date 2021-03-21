@@ -187,14 +187,20 @@ void draw_game(Game *game, int draw_x)
 
 void initialize_draw_context()
 {
-    Sprite *tile = create_sprite("assets/tile.png");
+    printf("About to initialize fraw context");
+    Sprite *tile_light = create_sprite("assets/tile_light.png");
+    Sprite *tile_dark = create_sprite("assets/tile_dark.png");
     FieldItem *item0 = malloc(sizeof(FieldItem));
-    item0->field_sprite = tile;
-    FieldItem *lookup_table = malloc(sizeof(FieldItem) * 1);
-    lookup_table = item0;
+    item0->field_sprite = tile_light;
+    FieldItem *item1 = malloc(sizeof(FieldItem));
+    item1->field_sprite = tile_dark;
+    FieldItem **lookup_table = malloc(sizeof(FieldItem *) * 2);
+    lookup_table[0] = item0;
+    lookup_table[1] = item1;
+    printf("Lookup table created\n");
 
     field_draw_context = malloc(sizeof(FieldDrawContext));
     field_draw_context->lookup_table = lookup_table;
-    field_draw_context->pitch_x = tile->width + 1;
-    field_draw_context->pitch_y = tile->height + 1;
+    field_draw_context->pitch_x = tile_light->width + 1;
+    field_draw_context->pitch_y = tile_light->height + 1;
 }
