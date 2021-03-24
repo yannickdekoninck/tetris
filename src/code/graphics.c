@@ -4,6 +4,7 @@
 SDL_Window *window = NULL;
 SDL_Surface *screenSurface = NULL;
 SDL_Renderer *renderer = NULL;
+TTF_Font *font = NULL;
 
 int initialize_graphics(char *app_name, int screen_width, int screen_height)
 {
@@ -13,7 +14,7 @@ int initialize_graphics(char *app_name, int screen_width, int screen_height)
         printf("SDL could not initialize! SDL_Error: %s\n", SDL_GetError());
         return -1;
     }
-    
+
     //Create window
     window = SDL_CreateWindow(app_name, SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, screen_width, screen_height, SDL_WINDOW_SHOWN);
     if (window == NULL)
@@ -33,6 +34,23 @@ int initialize_graphics(char *app_name, int screen_width, int screen_height)
     {
         printf("Could not initialize SDL2_image\n");
         return -4;
+    }
+    //Initialize SDL_ttf
+    if (TTF_Init() == -1)
+    {
+        printf("Could not initialize SDL_TTF SDL_ttf Error: %s\n", TTF_GetError());
+        return -5;
+    }
+
+    // Load up font
+
+    //Globally used font
+
+    font = TTF_OpenFont("assets/minecrafter.ttf", 50);
+    if (font == NULL)
+    {
+        printf("Failed to load font! SDL_ttf Error: %s\n", TTF_GetError());
+        return -6;
     }
 
     return 0;
@@ -97,4 +115,19 @@ void destroy_sprite(Sprite *sprite)
 {
     free(sprite);
     return;
+}
+
+void draw_text(char *text, int x, int y)
+{
+    SDL_Color textColor = {40, 73, 107};
+    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, textColor);
+    SDL_Texture *text_texture = SDL_CreateTextureFromSurface(renderer, textSurface);
+    SDL_Rect target_rect;
+    target_rect.x = x;
+    target_rect.y = y;
+    target_rect.w = textSurface->w;
+    target_rect.h = textSurface->h;
+    SDL_RenderCopy(renderer, text_texture, NULL, &target_rect);
+    SDL_FreeSurface(textSurface);
+    SDL_DestroyTexture(text_texture);
 }
