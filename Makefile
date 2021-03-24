@@ -1,9 +1,9 @@
 CC=gcc
-CFLAGS= -l SDL2 -l SDL2_image
+CFLAGS= -l SDL2 -l SDL2_image -l SDL2_ttf
 BUILD_DIR = build
 ASSET_DIR = $(BUILD_DIR)/assets
 OBJS=$(BUILD_DIR)/tetris.o $(BUILD_DIR)/graphics.o $(BUILD_DIR)/field.o $(BUILD_DIR)/blocks.o $(BUILD_DIR)/game_time.o $(BUILD_DIR)/game.o $(BUILD_DIR)/events.o
-GFX=$(BUILD_DIR)/assets/tile.png $(BUILD_DIR)/assets/tile_dark.png $(BUILD_DIR)/assets/tile_light.png
+GFX=$(BUILD_DIR)/assets/tile.png $(BUILD_DIR)/assets/tile_dark.png $(BUILD_DIR)/assets/tile_light.png $(BUILD_DIR)/assets/minecrafter.ttf 
 BIN=$(BUILD_DIR)/main
 
 
@@ -30,6 +30,9 @@ build/%.o: src/code/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 build/assets/%.png: src/assets/cpld/%.png
+	cp $< $@
+
+build/assets/%.ttf: src/assets/cpld/%.ttf
 	cp $< $@
 
 clean:

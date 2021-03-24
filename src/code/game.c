@@ -183,6 +183,9 @@ void draw_game(Game *game, int draw_x)
     //draw_field(game->current_block_field, field_draw_context, draw_x, 300);
     Field *field_to_draw = merge_fields(game->current_block_field, game->game_field);
     draw_field(field_to_draw, field_draw_context, draw_x, 300);
+    char *score = malloc(sizeof(char) * 5);
+    sprintf(score, "%d", game->total_lines);
+    draw_text(score, draw_x - 15, 500);
     return;
 }
 
