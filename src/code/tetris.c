@@ -30,18 +30,23 @@ int main(int argc, char *argv[])
     int game_left_channel = 0;
     int game_right_channel = 0;
 
-    if (number_of_joysticks == 1)
-    {
-        game_left_channel = 1;
-    }
-    if (number_of_joysticks == 2)
-    {
-        game_left_channel = 1;
-        game_right_channel = 2;
-    }
+    Game **games;
+    int number_of_games = 1;
 
-    Game *game_left = initialize_game(game_left_channel);
-    Game *game_right = initialize_game(game_right_channel);
+    if (number_of_joysticks == 0)
+    {
+        games = malloc(sizeof(Game *));
+        games[0] = initialize_game(0);
+    }
+    else
+    {
+        number_of_games = number_of_joysticks;
+        games = malloc(sizeof(Game *) * number_of_joysticks);
+        for (int i = 0; i < number_of_games; i++)
+        {
+            games[i] = initialize_game(i + 1);
+        }
+    }
     printf("Initialized game\n");
 
     while (!quit)
@@ -50,13 +55,19 @@ int main(int argc, char *argv[])
         quit = get_events();
 
         // Updating game logic
-        update_game(game_left);
-        update_game(game_right);
+        for (int i = 0; i < number_of_games; i++)
+        {
+            update_game(games[i]);
+        }
         //Fill the surface white
 
         clear_screen();
-        draw_game(game_left, 230);
-        draw_game(game_right, 580);
+        int dx = SCREEN_WIDTH / number_of_games;
+        for (int i = 0; i < number_of_games; i++)
+        {
+            int game_x = i * dx + dx / 2;
+            draw_game(games[i], game_x);
+        }
 
         //Update the surface
         update_screen();
