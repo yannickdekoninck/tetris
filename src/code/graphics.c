@@ -123,10 +123,11 @@ void draw_text(char *text, int x, int y)
     SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, textColor);
     SDL_Texture *text_texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_Rect target_rect;
-    target_rect.x = x;
-    target_rect.y = y;
+
     target_rect.w = textSurface->w;
     target_rect.h = textSurface->h;
+    target_rect.x = x - target_rect.w / 2;
+    target_rect.y = y - target_rect.h / 2;
     SDL_RenderCopy(renderer, text_texture, NULL, &target_rect);
     SDL_FreeSurface(textSurface);
     SDL_DestroyTexture(text_texture);
