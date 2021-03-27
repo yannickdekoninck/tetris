@@ -25,10 +25,6 @@ Game *initialize_game(int input_channel)
 
     new_game->total_lines = 0;
 
-    // L
-    set_field_value(new_game->game_field, 0, 0, 0);
-    set_field_value(new_game->game_field, 9, 0, 0);
-
     next_block(new_game);
 
     return new_game;
@@ -185,7 +181,7 @@ void draw_game(Game *game, int draw_x)
     draw_field(field_to_draw, field_draw_context, draw_x, 300);
     char *score = malloc(sizeof(char) * 5);
     sprintf(score, "%d", game->total_lines);
-    draw_text(score, draw_x - 15, 500);
+    draw_text(score, draw_x, 525);
     return;
 }
 
