@@ -19,19 +19,19 @@ int main(int argc, char *argv[])
         printf("Something went wrong initializing the graphics system");
         return -1;
     }
+    initialize_events();
     init_gametime(60);
     printf("Initialized game time\n");
-    initialize_draw_context();
-    printf("Initialized draw context\n");
+
     initialize_block_list();
     printf("Initialized block list\n");
-    initialize_events();
+
     bool quit = false;
     int game_left_channel = 0;
     int game_right_channel = 0;
 
     Game **games;
-    int number_of_games = 1;
+    number_of_games = 1;
 
     if (number_of_joysticks == 0)
     {
@@ -48,6 +48,8 @@ int main(int argc, char *argv[])
         }
     }
     printf("Initialized game\n");
+    initialize_draw_context();
+    printf("Initialized draw context\n");
 
     while (!quit)
     {
