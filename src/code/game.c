@@ -178,7 +178,7 @@ void draw_game(Game *game, int draw_x)
 {
     //draw_field(game->current_block_field, field_draw_context, draw_x, 300);
     Field *field_to_draw = merge_fields(game->current_block_field, game->game_field);
-    draw_field(field_to_draw, field_draw_context, draw_x, 300);
+    draw_field(field_to_draw, field_draw_context[game->input_channel - 1], draw_x, 300);
     char *score = malloc(sizeof(char) * 5);
     sprintf(score, "%d", game->total_lines);
     draw_text(score, draw_x, 525);
@@ -187,20 +187,33 @@ void draw_game(Game *game, int draw_x)
 
 void initialize_draw_context()
 {
-    printf("About to initialize fraw context");
-    Sprite *tile_light = create_sprite("assets/tile_light.png");
-    Sprite *tile_dark = create_sprite("assets/tile_dark.png");
-    FieldItem *item0 = malloc(sizeof(FieldItem));
-    item0->field_sprite = tile_light;
-    FieldItem *item1 = malloc(sizeof(FieldItem));
-    item1->field_sprite = tile_dark;
-    FieldItem **lookup_table = malloc(sizeof(FieldItem *) * 2);
-    lookup_table[0] = item0;
-    lookup_table[1] = item1;
+    char **dark_tiles = malloc(sizeof(char *) * 4);
+    char **light_tiles = malloc(sizeof(char *) * 4);
+    dark_tiles[0] = "assets/tile_dark.png";
+    dark_tiles[2] = "assets/tile_dark_brown.png";
+    dark_tiles[1] = "assets/tile_dark_blue.png";
+    dark_tiles[3] = "assets/tile_dark_green.png";
+    light_tiles[0] = "assets/tile_light.png";
+    light_tiles[2] = "assets/tile_light_brown.png";
+    light_tiles[1] = "assets/tile_light_blue.png";
+    light_tiles[3] = "assets/tile_light_green.png";
+    field_draw_context = malloc(sizeof(FieldDrawContext *) * number_of_games);
+    for (int i = 0; i < number_of_games; i++)
+    {
+        field_draw_context[i] = malloc(sizeof(FieldDrawContext));
+        printf("About to initialize fraw context");
+        Sprite *tile_light = create_sprite(light_tiles[i]);
+        Sprite *tile_dark = create_sprite(dark_tiles[i]);
+        FieldItem *item0 = malloc(sizeof(FieldItem));
+        item0->field_sprite = tile_light;
+        FieldItem *item1 = malloc(sizeof(FieldItem));
+        item1->field_sprite = tile_dark;
+        FieldItem **lookup_table = malloc(sizeof(FieldItem *) * 2);
+        lookup_table[0] = item0;
+        lookup_table[1] = item1;
+        field_draw_context[i]->lookup_table = lookup_table;
+        field_draw_context[i]->pitch_x = tile_light->width + 1;
+        field_draw_context[i]->pitch_y = tile_light->height + 1;
+    }
     printf("Lookup table created\n");
-
-    field_draw_context = malloc(sizeof(FieldDrawContext));
-    field_draw_context->lookup_table = lookup_table;
-    field_draw_context->pitch_x = tile_light->width + 1;
-    field_draw_context->pitch_y = tile_light->height + 1;
 }

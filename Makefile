@@ -3,7 +3,7 @@ CFLAGS= -l SDL2 -l SDL2_image -l SDL2_ttf
 BUILD_DIR = build
 ASSET_DIR = $(BUILD_DIR)/assets
 OBJS=$(BUILD_DIR)/tetris.o $(BUILD_DIR)/graphics.o $(BUILD_DIR)/field.o $(BUILD_DIR)/blocks.o $(BUILD_DIR)/game_time.o $(BUILD_DIR)/game.o $(BUILD_DIR)/events.o
-GFX=$(BUILD_DIR)/assets/tile.png $(BUILD_DIR)/assets/tile_dark.png $(BUILD_DIR)/assets/tile_light.png $(BUILD_DIR)/assets/minecrafter.ttf 
+GFX= $(ASSET_DIR)/tile_light_blue.png $(ASSET_DIR)/tile_light_brown.png $(ASSET_DIR)/tile_light_green.png  $(ASSET_DIR)/tile_dark_blue.png $(ASSET_DIR)/tile_dark_brown.png $(ASSET_DIR)/tile_dark_green.png $(BUILD_DIR)/assets/tile_dark.png $(BUILD_DIR)/assets/tile_light.png $(BUILD_DIR)/assets/minecrafter.ttf 
 BIN=$(BUILD_DIR)/main
 
 
