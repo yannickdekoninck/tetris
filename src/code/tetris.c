@@ -64,6 +64,19 @@ int main(int argc, char *argv[])
         // getting events
         quit = get_events();
 
+        if (gamestate == STATE_STARTING)
+        {
+            bool ready = true;
+            for (int i = 0; i < number_of_games; i++)
+            {
+                ready = ready & games[i]->ready;
+            }
+            if (ready)
+            {
+                gamestate = STATE_RUNNING;
+            }
+        }
+
         // Updating game logic
         for (int i = 0; i < number_of_games; i++)
         {

@@ -238,6 +238,7 @@ void draw_game(Game *game, int draw_x)
         sprintf(score, "%d", game->total_lines);
         Color text_color = COLOR_BLUE;
         draw_text(score, draw_x, 525, text_color);
+        draw_text(players[game->player_id], draw_x, 100, text_color);
     }
     if (gamestate == STATE_STARTING)
     {
@@ -251,7 +252,7 @@ void draw_game(Game *game, int draw_x)
             Color text_color = COLOR_BLUE;
             draw_text(players[game->player_id], draw_x, 300, text_color);
         }
-        }
+    }
     return;
 }
 
