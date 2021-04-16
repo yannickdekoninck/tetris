@@ -32,6 +32,7 @@ typedef struct Game
     int input_channel;
     int player_id;
     bool ready;
+    bool winner;
 
 } Game;
 

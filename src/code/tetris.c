@@ -77,6 +77,19 @@ int main(int argc, char *argv[])
             }
         }
 
+        if (gamestate == STATE_RUNNING)
+        {
+            for (int i = 0; i < number_of_games; i++)
+            {
+                if (games[i]->total_lines == 50)
+                {
+                    games[i]->winner = true;
+                    gamestate = STATE_FINISHED;
+                    break;
+                }
+            }
+        }
+
         // Updating game logic
         for (int i = 0; i < number_of_games; i++)
         {
