@@ -122,8 +122,46 @@ void check_lines(Game *game)
     }
 }
 
+int calculate_next_player_id(int current_id, int change)
+{
+    int next_id = current_id + change;
+    if (next_id < 0)
+    {
+        next_id = number_of_players - 1;
+    }
+    if (next_id >= number_of_players)
+    {
+        next_id = 0;
+    }
+    return next_id;
+}
+
 void update_game(Game *game)
 {
+
+    if (gamestate == STATE_STARTING)
+    {
+        for (int i = 0; i < input_event_counter; i++)
+        {
+            InputEvent e = input_events[i];
+            if (e.channel == game->input_channel)
+            {
+                switch (e.key)
+                {
+                case KEYDOWN:
+                    game->player_id = calculate_next_player_id(game->player_id, -1);
+                    break;
+                case KEYUP:
+                    game->player_id = calculate_next_player_id(game->player_id, 1);
+                    break;
+                case KEYSPACE:
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+    }
 
     if (gamestate == STATE_RUNNING)
     {
