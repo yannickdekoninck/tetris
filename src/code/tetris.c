@@ -11,14 +11,9 @@
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
-#define STATE_STARTING 0
-#define STATE_RUNNING 1
-#define STATE_FINISHED 2
-
 int main(int argc, char *argv[])
 {
 
-    
     int gfx_init = initialize_graphics("Tetris", SCREEN_WIDTH, SCREEN_HEIGHT);
     if (gfx_init < 0)
     {
@@ -52,6 +47,12 @@ int main(int argc, char *argv[])
         for (int i = 0; i < number_of_games; i++)
         {
             games[i] = initialize_game(i + 1);
+            int player_id = i;
+            if (i >= number_of_players)
+            {
+                player_id = number_of_players - 1;
+            }
+            games[i]->player_id = player_id;
         }
     }
     printf("Initialized game\n");

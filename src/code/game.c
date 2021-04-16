@@ -1,5 +1,6 @@
 #include "game.h"
 #include "events.h"
+#include "players.h"
 
 Game *initialize_game(int input_channel)
 {
@@ -26,6 +27,8 @@ Game *initialize_game(int input_channel)
     new_game->total_lines = 0;
 
     next_block(new_game);
+
+    gamestate = STATE_STARTING;
 
     return new_game;
 }
@@ -122,47 +125,50 @@ void check_lines(Game *game)
 void update_game(Game *game)
 {
 
-    // Auto move
-    if ((frame_counter % 60) == 0)
+    if (gamestate == STATE_RUNNING)
     {
+        // Auto move
+        if ((frame_counter % 60) == 0)
+        {
 
-        fill_block_instance(game->current_block, game->current_block_field, block_list, -2);
-        if (check_move(game->game_field, game->current_block, 0, -1))
-        {
-            game->current_block->position.y -= 1;
-            fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
-        }
-        else
-        {
-            block_down(game);
-        }
-    }
-    // Event checking
-
-    for (int i = 0; i < input_event_counter; i++)
-    {
-        InputEvent e = input_events[i];
-        if (e.channel == game->input_channel)
-        {
-            switch (e.key)
+            fill_block_instance(game->current_block, game->current_block_field, block_list, -2);
+            if (check_move(game->game_field, game->current_block, 0, -1))
             {
-            case KEYLEFT:
-                move_current_block(game, -1, 0);
-                break;
-            case KEYRIGHT:
-                move_current_block(game, +1, 0);
-                break;
-            case KEYDOWN:
-                move_current_block(game, 0, -1);
-                break;
-            case KEYUP:
-                rotate_current_block(game);
-                break;
-            case KEYSPACE:
-                drop_current_block(game);
-                break;
-            default:
-                break;
+                game->current_block->position.y -= 1;
+                fill_block_instance(game->current_block, game->current_block_field, block_list, 0);
+            }
+            else
+            {
+                block_down(game);
+            }
+        }
+        // Event checking
+
+        for (int i = 0; i < input_event_counter; i++)
+        {
+            InputEvent e = input_events[i];
+            if (e.channel == game->input_channel)
+            {
+                switch (e.key)
+                {
+                case KEYLEFT:
+                    move_current_block(game, -1, 0);
+                    break;
+                case KEYRIGHT:
+                    move_current_block(game, +1, 0);
+                    break;
+                case KEYDOWN:
+                    move_current_block(game, 0, -1);
+                    break;
+                case KEYUP:
+                    rotate_current_block(game);
+                    break;
+                case KEYSPACE:
+                    drop_current_block(game);
+                    break;
+                default:
+                    break;
+                }
             }
         }
     }
@@ -176,12 +182,19 @@ void update_game(Game *game)
 
 void draw_game(Game *game, int draw_x)
 {
-    //draw_field(game->current_block_field, field_draw_context, draw_x, 300);
-    Field *field_to_draw = merge_fields(game->current_block_field, game->game_field);
-    draw_field(field_to_draw, field_draw_context[game->input_channel - 1], draw_x, 300);
-    char *score = malloc(sizeof(char) * 5);
-    sprintf(score, "%d", game->total_lines);
-    draw_text(score, draw_x, 525);
+    if (gamestate == STATE_RUNNING)
+    {
+        //draw_field(game->current_block_field, field_draw_context, draw_x, 300);
+        Field *field_to_draw = merge_fields(game->current_block_field, game->game_field);
+        draw_field(field_to_draw, field_draw_context[game->input_channel - 1], draw_x, 300);
+        char *score = malloc(sizeof(char) * 5);
+        sprintf(score, "%d", game->total_lines);
+        draw_text(score, draw_x, 525);
+    }
+    if (gamestate == STATE_STARTING)
+    {
+        draw_text(players[game->player_id], draw_x, 300);
+    }
     return;
 }
 

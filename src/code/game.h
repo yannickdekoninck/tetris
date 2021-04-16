@@ -13,6 +13,12 @@
 
 #define MAX_BLOCKS 10000
 
+#define STATE_STARTING 0
+#define STATE_RUNNING 1
+#define STATE_FINISHED 2
+
+int gamestate;
+
 typedef struct Game
 {
     int msec_between_block_moves;
