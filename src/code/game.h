@@ -23,6 +23,7 @@ typedef struct Game
     int sequence_id;
     int total_lines;
     int input_channel;
+    int player_id;
 
 } Game;
 

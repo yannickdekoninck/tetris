@@ -4,21 +4,28 @@
 #include "game_time.h"
 #include "game.h"
 #include "events.h"
+#include "players.h"
 #include <stdio.h>
 #include <stdbool.h>
 //Screen dimension constants
 const int SCREEN_WIDTH = 800;
 const int SCREEN_HEIGHT = 600;
 
+#define STATE_STARTING 0
+#define STATE_RUNNING 1
+#define STATE_FINISHED 2
+
 int main(int argc, char *argv[])
 {
 
+    
     int gfx_init = initialize_graphics("Tetris", SCREEN_WIDTH, SCREEN_HEIGHT);
     if (gfx_init < 0)
     {
         printf("Something went wrong initializing the graphics system");
         return -1;
     }
+    init_players();
     initialize_events();
     init_gametime(60);
     printf("Initialized game time\n");
