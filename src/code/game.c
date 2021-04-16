@@ -30,6 +30,8 @@ Game *initialize_game(int input_channel)
 
     gamestate = STATE_STARTING;
 
+    new_game->ready = false;
+
     return new_game;
 }
 bool move_current_block(Game *game, int dx, int dy)
@@ -149,12 +151,19 @@ void update_game(Game *game)
                 switch (e.key)
                 {
                 case KEYDOWN:
-                    game->player_id = calculate_next_player_id(game->player_id, -1);
+                    if (game->ready == false)
+                    {
+                        game->player_id = calculate_next_player_id(game->player_id, -1);
+                    }
                     break;
                 case KEYUP:
-                    game->player_id = calculate_next_player_id(game->player_id, 1);
+                    if (game->ready == false)
+                    {
+                        game->player_id = calculate_next_player_id(game->player_id, 1);
+                    }
                     break;
                 case KEYSPACE:
+                    game->ready = !game->ready;
                     break;
                 default:
                     break;
@@ -232,9 +241,17 @@ void draw_game(Game *game, int draw_x)
     }
     if (gamestate == STATE_STARTING)
     {
-        Color text_color = COLOR_BLUE;
-        draw_text(players[game->player_id], draw_x, 300, text_color);
-    }
+        if (game->ready)
+        {
+            Color text_color = COLOR_GREEN;
+            draw_text(players[game->player_id], draw_x, 300, text_color);
+        }
+        else
+        {
+            Color text_color = COLOR_BLUE;
+            draw_text(players[game->player_id], draw_x, 300, text_color);
+        }
+        }
     return;
 }
 

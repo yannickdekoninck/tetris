@@ -7,6 +7,7 @@
 #include "field.h"
 #include "blocks.h"
 #include "game_time.h"
+#include "stdbool.h"
 
 #define FIELD_WIDTH 10
 #define FIELD_HEIGHT 22
@@ -30,6 +31,7 @@ typedef struct Game
     int total_lines;
     int input_channel;
     int player_id;
+    bool ready;
 
 } Game;
 

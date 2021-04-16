@@ -5,9 +5,9 @@
 #include "SDL2/SDL_image.h"
 #include <SDL2/SDL_ttf.h>
 
-#define COLOR_BLUE  \
-    {               \
-        40, 73, 107 \
+#define COLOR_BLUE                          \
+    {                                       \
+        .red = 40, .green = 73, .blue = 107 \
     }
 
 #define COLOR_GREEN  \
