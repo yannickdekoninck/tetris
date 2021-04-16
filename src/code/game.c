@@ -227,11 +227,13 @@ void draw_game(Game *game, int draw_x)
         draw_field(field_to_draw, field_draw_context[game->input_channel - 1], draw_x, 300);
         char *score = malloc(sizeof(char) * 5);
         sprintf(score, "%d", game->total_lines);
-        draw_text(score, draw_x, 525);
+        Color text_color = COLOR_BLUE;
+        draw_text(score, draw_x, 525, text_color);
     }
     if (gamestate == STATE_STARTING)
     {
-        draw_text(players[game->player_id], draw_x, 300);
+        Color text_color = COLOR_BLUE;
+        draw_text(players[game->player_id], draw_x, 300, text_color);
     }
     return;
 }

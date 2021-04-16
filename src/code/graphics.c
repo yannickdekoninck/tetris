@@ -117,10 +117,11 @@ void destroy_sprite(Sprite *sprite)
     return;
 }
 
-void draw_text(char *text, int x, int y)
+void draw_text(char *text, int x, int y, Color text_color)
 {
-    SDL_Color textColor = {40, 73, 107};
-    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, textColor);
+    SDL_Color tc = {text_color.red, text_color.green, text_color.blue};
+
+    SDL_Surface *textSurface = TTF_RenderText_Solid(font, text, tc);
     SDL_Texture *text_texture = SDL_CreateTextureFromSurface(renderer, textSurface);
     SDL_Rect target_rect;
 
