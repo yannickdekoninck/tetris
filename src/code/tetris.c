@@ -4,6 +4,7 @@
 #include "game_time.h"
 #include "game.h"
 #include "events.h"
+#include "players.h"
 #include <stdio.h>
 #include <stdbool.h>
 //Screen dimension constants
@@ -19,6 +20,7 @@ int main(int argc, char *argv[])
         printf("Something went wrong initializing the graphics system");
         return -1;
     }
+    init_players();
     initialize_events();
     init_gametime(60);
     printf("Initialized game time\n");
@@ -45,6 +47,12 @@ int main(int argc, char *argv[])
         for (int i = 0; i < number_of_games; i++)
         {
             games[i] = initialize_game(i + 1);
+            int player_id = i;
+            if (i >= number_of_players)
+            {
+                player_id = number_of_players - 1;
+            }
+            games[i]->player_id = player_id;
         }
     }
     printf("Initialized game\n");
@@ -55,6 +63,32 @@ int main(int argc, char *argv[])
     {
         // getting events
         quit = get_events();
+
+        if (gamestate == STATE_STARTING)
+        {
+            bool ready = true;
+            for (int i = 0; i < number_of_games; i++)
+            {
+                ready = ready & games[i]->ready;
+            }
+            if (ready)
+            {
+                gamestate = STATE_RUNNING;
+            }
+        }
+
+        if (gamestate == STATE_RUNNING)
+        {
+            for (int i = 0; i < number_of_games; i++)
+            {
+                if (games[i]->total_lines == 50)
+                {
+                    games[i]->winner = true;
+                    gamestate = STATE_FINISHED;
+                    break;
+                }
+            }
+        }
 
         // Updating game logic
         for (int i = 0; i < number_of_games; i++)

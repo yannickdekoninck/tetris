@@ -5,6 +5,16 @@
 #include "SDL2/SDL_image.h"
 #include <SDL2/SDL_ttf.h>
 
+#define COLOR_BLUE                          \
+    {                                       \
+        .red = 40, .green = 73, .blue = 107 \
+    }
+
+#define COLOR_GREEN  \
+    {                \
+        104, 152, 90 \
+    }
+
 typedef struct Sprites
 {
     SDL_Texture *sprite_texture;
@@ -12,6 +22,13 @@ typedef struct Sprites
     int height;
 
 } Sprite;
+
+typedef struct Color
+{
+    int red;
+    int green;
+    int blue;
+} Color;
 
 int initialize_graphics(char *app_name, int screen_width, int screen_height);
 
@@ -25,6 +42,6 @@ Sprite *create_sprite(char *path);
 void destroy_sprite(Sprite *sprite);
 void draw_sprite(Sprite *sprite, int x, int y);
 
-void draw_text(char *text, int x, int y);
+void draw_text(char *text, int x, int y, Color text_color);
 
 #endif

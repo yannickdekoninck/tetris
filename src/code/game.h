@@ -7,11 +7,18 @@
 #include "field.h"
 #include "blocks.h"
 #include "game_time.h"
+#include "stdbool.h"
 
 #define FIELD_WIDTH 10
 #define FIELD_HEIGHT 22
 
 #define MAX_BLOCKS 10000
+
+#define STATE_STARTING 0
+#define STATE_RUNNING 1
+#define STATE_FINISHED 2
+
+int gamestate;
 
 typedef struct Game
 {
@@ -23,6 +30,9 @@ typedef struct Game
     int sequence_id;
     int total_lines;
     int input_channel;
+    int player_id;
+    bool ready;
+    bool winner;
 
 } Game;
 
